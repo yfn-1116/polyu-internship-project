@@ -1,22 +1,30 @@
-# Requirements
+# 01 需求分析
 
-This folder stores requirement analysis documents.
+这个目录用于整理项目“要做什么、为什么做、做到什么程度算完成”。需求分析是后续设计、技术选型和开发排期的基础。
 
-## What To Capture
+## 本模块作用
 
-- Project background and goals.
-- Stakeholders and user roles.
-- User workflows and expected outputs.
-- Functional requirements.
-- Non-functional requirements, such as performance, security, maintainability, usability, and deployment constraints.
-- Input data, output data, and data ownership.
-- Acceptance criteria.
+- 记录项目背景、实习目标和导师要求。
+- 明确用户角色、使用场景和核心流程。
+- 拆分功能需求和非功能需求。
+- 定义输入、输出、数据来源和数据归属。
+- 写清楚验收标准，避免后续开发时目标模糊。
 
-## Suggested Files
+## 建议记录内容
 
-- `01-project-background.md`
-- `02-user-roles.md`
-- `03-functional-requirements.md`
-- `04-non-functional-requirements.md`
-- `05-acceptance-criteria.md`
+- 项目背景：项目从哪里来，解决什么问题。
+- 项目目标：最终希望实现什么能力。
+- 用户角色：谁会使用系统，谁会维护系统。
+- 业务流程：用户从进入系统到完成任务的完整路径。
+- 功能需求：系统必须提供哪些功能。
+- 非功能需求：性能、安全、可维护性、可扩展性、易用性、部署环境等要求。
+- 数据需求：需要什么数据，数据如何进入系统，结果如何输出。
+- 验收标准：用什么标准判断项目完成。
 
+## 建议后续文件
+
+- `01-project-background.md`：项目背景与目标。
+- `02-user-roles.md`：用户角色与使用场景。
+- `03-functional-requirements.md`：功能需求清单。
+- `04-non-functional-requirements.md`：非功能需求清单。
+- `05-acceptance-criteria.md`：验收标准。

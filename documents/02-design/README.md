@@ -1,46 +1,57 @@
-# Design
+# 02 系统设计
 
-This folder stores architecture and system design documents.
+这个目录用于说明项目应该如何分层、如何分模块、各模块之间如何协作。设计文档要回答的不只是“怎么写代码”，还要说明“这个模块在整体架构里处于什么位置”。
 
-## Architecture Position
+## 本模块作用
 
-Each design document should explain where the module sits in the whole system:
+- 描述整体系统架构。
+- 明确前端、后端、数据、模型、接口、部署等模块边界。
+- 说明每个模块的输入、输出、依赖和责任。
+- 记录重要技术决策和设计取舍。
+- 为后续开发、测试、部署和交接提供依据。
 
-- Is it a frontend page, backend service, data pipeline, model component, integration layer, or deployment tool?
-- What modules depend on it?
-- What modules does it depend on?
-- What data enters and leaves this module?
-- What should be isolated so it can be changed later?
+## 架构位置分析
 
-## Frontend Analysis
+每个模块都应该说明：
 
-Use this section when the project includes a frontend:
+- 它属于前端、后端、数据处理、模型服务、集成层，还是部署工具。
+- 它在整体系统中解决什么问题。
+- 它依赖哪些模块。
+- 哪些模块会调用它。
+- 数据如何进入这个模块，又如何输出。
+- 哪些逻辑需要隔离，方便后续替换或扩展。
 
-- Main pages and user workflows.
-- Component structure.
-- State management.
-- API contracts needed from the backend.
-- Error, loading, empty, and permission states.
-- Accessibility and responsive layout requirements.
+## 前端分析
 
-## Backend Analysis
+如果项目需要前端，需要记录：
 
-Use this section when the project includes a backend:
+- 页面结构：有哪些页面，每个页面解决什么问题。
+- 用户流程：用户如何完成关键任务。
+- 组件划分：哪些内容应该拆成可复用组件。
+- 状态管理：哪些状态放在页面内，哪些状态需要全局管理。
+- 接口依赖：前端需要后端提供哪些 API。
+- 异常状态：加载中、空数据、错误、权限不足时如何展示。
+- 响应式要求：桌面端、平板、移动端是否都需要适配。
 
-- API endpoints and service boundaries.
-- Business logic modules.
-- Database or storage design.
-- Authentication and authorization.
-- External service integration.
-- Logging, validation, and error handling.
+## 后端分析
 
-## Suggested Files
+如果项目需要后端，需要记录：
 
-- `01-system-overview.md`
-- `02-module-breakdown.md`
-- `03-frontend-design.md`
-- `04-backend-design.md`
-- `05-data-design.md`
-- `06-api-contracts.md`
-- `07-deployment-design.md`
+- API 设计：有哪些接口，每个接口的输入和输出是什么。
+- 服务边界：业务逻辑、数据访问、鉴权、外部集成如何分层。
+- 数据设计：是否需要数据库、文件存储、缓存或对象存储。
+- 权限控制：谁可以访问哪些数据和功能。
+- 错误处理：参数错误、业务错误、系统错误如何返回。
+- 日志与监控：需要记录哪些日志，如何定位问题。
+- 外部依赖：是否接入第三方 API、模型服务或学校系统。
 
+## 建议后续文件
+
+- `01-system-overview.md`：整体架构说明。
+- `02-module-breakdown.md`：模块拆分与职责说明。
+- `03-frontend-design.md`：前端设计。
+- `04-backend-design.md`：后端设计。
+- `05-data-design.md`：数据结构与存储设计。
+- `06-api-contracts.md`：接口契约。
+- `07-deployment-design.md`：部署设计。
+- `08-technology-selection.md`：技术选型和取舍。

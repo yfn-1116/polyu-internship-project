@@ -1,22 +1,26 @@
-# FAQ
+# 03 FAQ
 
-This folder stores frequently asked questions and answers.
+这个目录用于记录反复出现的问题和对应答案。FAQ 的目标是减少重复解释，让导师、队友或后续接手者能快速找到常见问题的答案。
 
-Use it to document recurring explanations, supervisor feedback, setup questions, and design decisions that future maintainers may ask again.
+## 本模块作用
 
-## Template
+- 记录需求、设计、环境、部署、数据等常见问题。
+- 保存导师或团队反复提到的说明。
+- 解释容易混淆的术语、流程和决策。
+- 帮助新接手的人快速理解项目。
+
+## 建议记录格式
 
 ```md
-## Question
+## 问题
 
-What is unclear?
+这里写具体问题。
 
-## Answer
+## 答案
 
-Explain the answer briefly.
+这里写简洁、可执行的答案。
 
-## Related Files
+## 相关文件
 
-- Link to requirements, design, code, or meeting notes.
+- 链接到相关需求、设计、代码或会议记录。
 ```
-

@@ -1,14 +1,28 @@
-# Runbook
+# 98 运行手册
 
-This folder stores operational instructions.
+这个目录用于记录项目如何启动、测试、部署和排错。它面向“需要把项目跑起来的人”，因此命令、路径、环境变量和注意事项都要写清楚。
 
-Use it when the project has commands, services, environments, deployments, or routine maintenance tasks.
+## 本模块作用
 
-## Suggested Files
+- 记录本地开发环境搭建步骤。
+- 记录常用启动、测试、构建、部署命令。
+- 记录 GitHub 协作流程。
+- 记录常见错误和排查方法。
+- 保证换一台电脑或换一个人后，项目仍然可以复现。
 
-- `01-local-setup.md`
-- `02-development-workflow.md`
-- `03-test-and-validation.md`
-- `04-deployment.md`
-- `05-troubleshooting.md`
+## 建议记录内容
 
+- 操作系统和运行环境，例如 WSL2、Python、Node.js、数据库版本。
+- 依赖安装方式。
+- 本地启动步骤。
+- 测试和验证命令。
+- 部署步骤。
+- 常见问题和解决方式。
+
+## 建议后续文件
+
+- `01-local-setup.md`：本地环境搭建。
+- `02-development-workflow.md`：开发和 Git 工作流。
+- `03-test-and-validation.md`：测试与验证。
+- `04-deployment.md`：部署流程。
+- `05-troubleshooting.md`：故障排查。

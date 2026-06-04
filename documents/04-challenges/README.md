@@ -1,19 +1,26 @@
-# Challenges
+# 04 挑战与问题记录
 
-This folder stores technical risks, blockers, trade-offs, and unresolved problems.
+这个目录用于记录项目推进过程中的困难、风险、阻塞点和技术取舍。它不是简单的问题列表，而是给后续决策和交接看的风险台账。
 
-## What To Capture
+## 本模块作用
 
-- Problem description.
-- Why it matters.
-- Possible solutions.
-- Chosen solution and reason.
-- Remaining risk.
-- Owner and next action.
+- 记录当前遇到的问题和解决进度。
+- 分析问题为什么重要，会影响哪些模块。
+- 比较不同解决方案的优缺点。
+- 记录最终选择的方案和原因。
+- 保留尚未解决的风险，避免交接时信息丢失。
 
-## Suggested Files
+## 建议记录内容
 
-- `01-technical-risks.md`
-- `02-open-problems.md`
-- `03-decision-tradeoffs.md`
+- 问题描述：发生了什么。
+- 影响范围：影响需求、前端、后端、数据、部署还是交付。
+- 可能方案：有哪些可选解决方式。
+- 选择理由：为什么选择当前方案。
+- 剩余风险：还有什么不确定。
+- 下一步：谁来做，什么时候做，做到什么程度。
 
+## 建议后续文件
+
+- `01-technical-risks.md`：技术风险。
+- `02-open-problems.md`：未解决问题。
+- `03-decision-tradeoffs.md`：设计和技术取舍。

@@ -1,12 +1,19 @@
-# Knowledge Base
+# 99 知识库
 
-This folder stores reusable knowledge, references, links, explanations, and learning notes.
+这个目录用于沉淀长期有用的资料、链接、概念解释和学习笔记。它不直接对应某一个开发任务，但可以帮助后续需求分析、技术选型和问题排查。
 
-## What To Capture
+## 本模块作用
 
-- Papers, articles, documentation, and tutorials.
-- Domain concepts.
-- Technical notes.
-- Comparison notes for libraries, frameworks, models, or services.
-- Meeting summaries that are useful beyond a single task.
+- 保存论文、文档、教程、博客和官方资料链接。
+- 解释项目相关的领域概念和技术概念。
+- 记录框架、库、模型、服务的对比结论。
+- 保存对后续开发有复用价值的会议记录。
+- 避免资料散落在聊天记录、浏览器收藏或个人笔记里。
 
+## 建议记录内容
+
+- 资料标题。
+- 链接或来源。
+- 摘要。
+- 为什么对本项目有用。
+- 和哪个需求、设计或问题相关。
