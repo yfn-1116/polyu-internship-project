@@ -89,14 +89,22 @@ MVP 目标：一周内跑通“输入样本 -> SMPL/SMPL-X 或可替换 backend 
   - 生成 `outputs/job_sample_001/manifest.json`
   - 生成 `outputs/job_sample_001/body.obj`
 
-### S-040 [TODO] SMPL/SMPL-X backend 接入验证
+### S-040 [DOING] SMPL/SMPL-X backend 接入验证
 
-- Started: -
+- Started: 2026-06-05
 - Done: -
 - DoD：
   - 明确使用的模型包和模型文件放置方式。
   - 真实模型资源可用时生成 mesh/params。
   - 资源不可用时，文档记录阻塞和 mock backend 兜底。
+- Progress：
+  - `project/model` 已新增 `export-default-smplx`。
+  - 默认 neutral SMPL-X 已能导出 `body.obj` 和 `manifest.json`。
+  - 尚未接入 `project/backend` pipeline。
+- Verify：
+  - `cd project/model && PYTHONPATH=src python -m pytest -v` 通过，4 passed
+  - `PYTHONPATH=src python -m smpl_model export-default-smplx --project-root /home/yfn/polyu-internship-project --output-dir /home/yfn/polyu-internship-project/outputs/smplx_default_neutral --gender neutral` 通过
+  - 当前结果：`vertices_count=10475`，`faces_count=20908`
 
 ### S-045 [DONE] SMPL-X 模型资产放置与环境验证
 
@@ -193,3 +201,4 @@ MVP 目标：一周内跑通“输入样本 -> SMPL/SMPL-X 或可替换 backend 
 - DEC-20260605-005：文档采用 quant_platform 风格：PRD/HLD/LLD/Runbook/Journal/Tracker 分层。
 - DEC-20260605-006：第一周增加最小前端 3D Viewer，商业级真实渲染作为后续产品化方向。
 - DEC-20260605-007：模型权重保存在本地 `models/`，只作为运行资产，不提交 Git；复制 Windows 下载目录到 WSL 项目目录时保留原始文件。
+- DEC-20260605-008：数据集和模型主线并行推进；第一周主线用 SMPL-X 默认人体保证可展示，支线申请/下载 THuman2.0 或 FAUST。

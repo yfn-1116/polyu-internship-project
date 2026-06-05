@@ -4,10 +4,10 @@
 
 ## 当前目标
 
-当前阶段只做模型环境检查，不直接生成真实 SMPL 人体。
+当前阶段支持模型环境检查，并可以导出一个默认 neutral SMPL-X 人体 `.obj`。
 
 ```text
-check Python deps -> check local model dirs -> report missing/present
+check Python deps -> check local model dirs -> export default SMPL-X mesh
 ```
 
 ## 目录职责
@@ -25,9 +25,9 @@ project/model/
 
 | 路径 | 作用 |
 | --- | --- |
-| `domain/` | 模型模块数据契约，例如环境检查报告 |
-| `app/` | 应用逻辑，例如检查依赖和模型目录 |
-| `entrypoints/` | CLI 入口，例如 `check-env` |
+| `domain/` | 模型模块数据契约，例如环境检查报告和 mesh 导出结果 |
+| `app/` | 应用逻辑，例如检查依赖、检查模型目录、导出 SMPL-X mesh |
+| `entrypoints/` | CLI 入口，例如 `check-env` 和 `export-default-smplx` |
 | `tests/` | 模型模块测试 |
 | `examples/` | 后续放示例参数，不放模型权重 |
 
@@ -56,9 +56,25 @@ PYTHONPATH=src python -m smpl_model check-env --project-root /home/yfn/polyu-int
 - `models/smpl`
 - `models/smplx`
 
+## 导出默认 SMPL-X 人体
+
+```bash
+cd /home/yfn/polyu-internship-project/project/model
+PYTHONPATH=src python -m smpl_model export-default-smplx \
+  --project-root /home/yfn/polyu-internship-project \
+  --output-dir /home/yfn/polyu-internship-project/outputs/smplx_default_neutral \
+  --gender neutral
+```
+
+成功标志：
+
+- 生成 `outputs/smplx_default_neutral/body.obj`
+- 生成 `outputs/smplx_default_neutral/manifest.json`
+- manifest 中 `vertices_count=10475`，`faces_count=20908`
+
 ## 后续扩展
 
 - `SMPLBackend`：加载 SMPL 模型，输出 mesh。
-- `SMPLXBackend`：加载 SMPL-X 模型，输出 mesh。
+- `SMPLXBackend`：已能导出默认人体 mesh，后续接入可变 shape/pose 参数。
 - `examples/`：保存 shape/pose 示例参数。
 - 后端通过稳定接口调用模型模块，不直接处理模型权重细节。

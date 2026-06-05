@@ -69,3 +69,8 @@
 - Decision：模型权重和公开数据集统一放在仓库根目录 `models/` 或 `data/` 的本地目录中，进入 pipeline 但不提交 Git。
 - Validation：`check-env` 通过；当前 `torch/smplx/trimesh/models/smpl/models/smplx=present`。
 - Validation：`git status --short` 为空，`git status --ignored --short` 显示 `models/` 为 ignored，模型权重未进入 Git 跟踪。
+- Decision：数据集采用双轨推进：主线不等待真实数据集，先用 SMPL-X 模型导出默认人体；支线申请/下载 THuman2.0 或 FAUST。
+- Dataset：THuman2.0/2.1 和 AGORA 不能只靠命令下载，需要注册/邮件申请；FAUST 作为较小真实 scan 兜底。
+- Model：新增 `export-default-smplx`，导出 neutral SMPL-X 默认人体 `.obj` 与 manifest。
+- Validation：`cd project/model && PYTHONPATH=src python -m pytest -v` 通过，4 passed。
+- Validation：`export-default-smplx` 通过，输出 `10475` vertices、`20908` faces 到 `outputs/smplx_default_neutral/`。

@@ -4,7 +4,7 @@
 
 ## 当前运行状态
 
-后端 Python 骨架、mock pipeline、前端 3D Viewer 和模型环境检查已可运行。SMPL-X 模型文件已放入本地 `models/smplx/`，下一步是实现真实 `SMPLXBackend` 输出人体 mesh。
+后端 Python 骨架、mock pipeline、前端 3D Viewer、模型环境检查和默认 SMPL-X mesh 导出已可运行。下一步是把模型模块输出接入后端 pipeline 和前端 Viewer。
 
 ## 本地环境检查
 
@@ -160,6 +160,57 @@ PYTHONPATH=src python -m smpl_model check-env --project-root /home/yfn/polyu-int
 ```bash
 cd /home/yfn/polyu-internship-project/project/model
 python -m pytest -v
+```
+
+当前通过情况：
+
+- `4 passed`
+
+## Model Module 导出默认 SMPL-X 人体
+
+```bash
+cd /home/yfn/polyu-internship-project/project/model
+PYTHONPATH=src python -m smpl_model export-default-smplx \
+  --project-root /home/yfn/polyu-internship-project \
+  --output-dir /home/yfn/polyu-internship-project/outputs/smplx_default_neutral \
+  --gender neutral
+```
+
+成功标志：
+
+- 生成 `outputs/smplx_default_neutral/body.obj`
+- 生成 `outputs/smplx_default_neutral/manifest.json`
+- manifest 中 `vertices_count=10475`，`faces_count=20908`
+
+## Dataset 获取准备
+
+数据集统一放到本地目录，不提交 Git：
+
+```bash
+cd /home/yfn/polyu-internship-project
+mkdir -p data/datasets/thuman2 data/datasets/faust data/datasets/agora
+```
+
+THuman2.0/2.1 需要先在官方 GitHub 阅读协议，邮件申请下载链接；拿到链接后再执行：
+
+```bash
+cd /home/yfn/polyu-internship-project
+wget -O data/datasets/thuman2/thuman2_download.zip "<THUMAN_DOWNLOAD_LINK>"
+unzip data/datasets/thuman2/thuman2_download.zip -d data/datasets/thuman2/
+```
+
+FAUST 需要从官方入口注册/获取下载链接；拿到链接后执行：
+
+```bash
+cd /home/yfn/polyu-internship-project
+wget -O data/datasets/faust/faust.zip "<FAUST_DOWNLOAD_LINK>"
+unzip data/datasets/faust/faust.zip -d data/datasets/faust/
+```
+
+AGORA 只能从官网登录后下载，官网说明下载链接只在网站内有效；拿到文件后放入：
+
+```text
+data/datasets/agora/
 ```
 
 ## 当前排错入口

@@ -4,15 +4,15 @@
 
 - Status: Open
 - Impact: 真实 dataset pipeline 可能延期。
-- Current handling: THuman2.0 优先申请；mock/synthetic 样本兜底；CAPE/FAUST 后续参考。
-- Next action: 确认验收是否允许 mock/synthetic 样本临时代替真实公开数据。
+- Current handling: THuman2.0/2.1 优先申请；FAUST 作为较小真实 scan 兜底；mock/synthetic 样本继续保证 pipeline 不阻塞。
+- Next action: 先用 SMPL-X 默认人体完成主线展示，同时提交 THuman2.0/FAUST 获取申请。
 
 ## RISK-002 SMPL/SMPL-X 模型文件可能未就绪
 
-- Status: Open
-- Impact: 真实模型 backend 可能不能及时运行。
-- Current handling: MockBackend 必须先跑通；真实 backend 资源可用后替换。
-- Next action: 确认本机是否已有 SMPL/SMPL-X 模型文件和下载权限。
+- Status: Closed
+- Impact: 已不阻塞默认 SMPL-X mesh 导出。
+- Current handling: SMPL-X 模型文件已放入 `models/smplx/`，依赖和默认导出已验证。
+- Next action: 接入后端 pipeline，并保留 mock backend 兜底。
 
 ## RISK-003 医院扫描仪格式未知
 

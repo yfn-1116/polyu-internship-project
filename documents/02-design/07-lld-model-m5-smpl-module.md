@@ -4,7 +4,7 @@
 
 `project/model` 是独立模型能力模块，负责检查和承载 SMPL/SMPL-X 相关依赖、模型文件和后续 mesh 生成逻辑。
 
-当前阶段已完成环境检查、目录规范和 SMPL-X 模型文件放置；下一步实现真实人体 mesh 生成。
+当前阶段已完成环境检查、目录规范、SMPL-X 模型文件放置和默认人体 mesh 导出。
 
 ## 1) 当前目录
 
@@ -38,6 +38,13 @@ models/
 PYTHONPATH=src python -m smpl_model check-env --project-root /home/yfn/polyu-internship-project
 ```
 
+```bash
+PYTHONPATH=src python -m smpl_model export-default-smplx \
+  --project-root /home/yfn/polyu-internship-project \
+  --output-dir /home/yfn/polyu-internship-project/outputs/smplx_default_neutral \
+  --gender neutral
+```
+
 检查项：
 
 - `torch`
@@ -66,11 +73,22 @@ PYTHONPATH=src python -m smpl_model check-env --project-root /home/yfn/polyu-int
 
 SMPL-X 文件已放置在 `models/smplx/`，包括 female/male/neutral 的 `.npz` 与 `.pkl` 文件。模型权重只参与本地运行，不进入 Git。
 
+默认 neutral SMPL-X 导出结果：
+
+```json
+{
+  "model_type": "smplx",
+  "gender": "neutral",
+  "vertices_count": 10475,
+  "faces_count": 20908
+}
+```
+
 ## 5) 后续实现路径
 
-1. 新增 `SMPLXBackend`，用默认 pose/shape 生成 mesh。
-2. 导出 `.obj`，交给前端 Viewer 和 Blender 验证。
-3. 将 backend 输出契约接入 `project/backend` pipeline。
+1. 将 `export_default_smplx` 接入 `project/backend` pipeline。
+2. 将输出 `.obj` 复制或服务化给前端 Viewer。
+3. 增加可配置 shape/pose 参数输入。
 
 ## References
 
