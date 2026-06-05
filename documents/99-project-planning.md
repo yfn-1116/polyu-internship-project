@@ -98,6 +98,20 @@ MVP 目标：一周内跑通“输入样本 -> SMPL/SMPL-X 或可替换 backend 
   - 真实模型资源可用时生成 mesh/params。
   - 资源不可用时，文档记录阻塞和 mock backend 兜底。
 
+### S-045 [DONE] SMPL-X 模型资产放置与环境验证
+
+- Started: 2026-06-05
+- Done: 2026-06-05
+- DoD：
+  - 将本地下载的 SMPL-X 模型文件放入 `models/smplx/`。
+  - 确认 `models/` 不进入 Git 跟踪。
+  - 重新执行模型环境检查。
+- Verify：
+  - `PYTHONPATH=src python -m smpl_model check-env --project-root /home/yfn/polyu-internship-project` 通过
+  - 当前结果：`torch=present`，`smplx=present`，`trimesh=present`，`models/smpl=present`，`models/smplx=present`
+  - 模型复制后 `git status --short` 无模型文件变更
+  - `git status --ignored --short` 显示 `models/` 为 ignored
+
 ### S-050 [TODO] DatasetInputAdapter 设计与最小样本接入
 
 - Started: -
@@ -168,7 +182,6 @@ MVP 目标：一周内跑通“输入样本 -> SMPL/SMPL-X 或可替换 backend 
 - `[TODO]` 数据安全：脱敏、审计、文件权限。
 - `[TODO]` Docker 环境。
 - `[TODO]` 将 Viewer 从静态 sample-human 切换为读取后端最新 manifest。
-- `[TODO]` 安装 `smplx` / `trimesh` 并获取 SMPL/SMPL-X 模型文件。
 - `[TODO]` 实现 `SMPLXBackend` 默认参数生成真实人体 `.obj`。
 
 ## 5) 当前关键决策
@@ -179,3 +192,4 @@ MVP 目标：一周内跑通“输入样本 -> SMPL/SMPL-X 或可替换 backend 
 - DEC-20260605-004：THuman2.0 优先，mock/synthetic 兜底，CAPE/FAUST 后续参考。
 - DEC-20260605-005：文档采用 quant_platform 风格：PRD/HLD/LLD/Runbook/Journal/Tracker 分层。
 - DEC-20260605-006：第一周增加最小前端 3D Viewer，商业级真实渲染作为后续产品化方向。
+- DEC-20260605-007：模型权重保存在本地 `models/`，只作为运行资产，不提交 Git；复制 Windows 下载目录到 WSL 项目目录时保留原始文件。

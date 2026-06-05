@@ -4,7 +4,7 @@
 
 ## 当前运行状态
 
-后端 Python 骨架、mock pipeline 和前端 3D Viewer 已可运行。
+后端 Python 骨架、mock pipeline、前端 3D Viewer 和模型环境检查已可运行。SMPL-X 模型文件已放入本地 `models/smplx/`，下一步是实现真实 `SMPLXBackend` 输出人体 mesh。
 
 ## 本地环境检查
 
@@ -134,10 +134,10 @@ PYTHONPATH=src python -m smpl_model check-env --project-root /home/yfn/polyu-int
 当前检查结果：
 
 - `torch`: present
-- `smplx`: missing
-- `trimesh`: missing
-- `models/smpl`: missing
-- `models/smplx`: missing
+- `smplx`: present
+- `trimesh`: present
+- `models/smpl`: present
+- `models/smplx`: present
 
 模型文件应放在：
 
@@ -147,6 +147,13 @@ PYTHONPATH=src python -m smpl_model check-env --project-root /home/yfn/polyu-int
 ```
 
 `models/` 已加入 `.gitignore`，不要提交模型权重。
+
+当前 SMPL-X 文件：
+
+- `models/smplx/SMPLX_FEMALE.npz`
+- `models/smplx/SMPLX_MALE.npz`
+- `models/smplx/SMPLX_NEUTRAL.npz`
+- 同目录还保留对应 `.pkl` 文件和 `version.txt`
 
 运行模型模块测试：
 

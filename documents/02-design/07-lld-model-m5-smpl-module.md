@@ -4,7 +4,7 @@
 
 `project/model` 是独立模型能力模块，负责检查和承载 SMPL/SMPL-X 相关依赖、模型文件和后续 mesh 生成逻辑。
 
-当前阶段不生成真实人体，只完成环境检查和目录规范。
+当前阶段已完成环境检查、目录规范和 SMPL-X 模型文件放置；下一步实现真实人体 mesh 生成。
 
 ## 1) 当前目录
 
@@ -54,22 +54,23 @@ PYTHONPATH=src python -m smpl_model check-env --project-root /home/yfn/polyu-int
 {
   "python_dependencies": {
     "torch": "present",
-    "smplx": "missing",
-    "trimesh": "missing"
+    "smplx": "present",
+    "trimesh": "present"
   },
   "model_dirs": {
-    "smpl": "missing",
-    "smplx": "missing"
+    "smpl": "present",
+    "smplx": "present"
   }
 }
 ```
 
+SMPL-X 文件已放置在 `models/smplx/`，包括 female/male/neutral 的 `.npz` 与 `.pkl` 文件。模型权重只参与本地运行，不进入 Git。
+
 ## 5) 后续实现路径
 
-1. 安装 `smplx` 和 `trimesh`。
-2. 获取并放置 SMPL/SMPL-X 模型文件。
-3. 新增 `SMPLXBackend`，用默认 pose/shape 生成 mesh。
-4. 导出 `.obj`，交给前端 Viewer 和 Blender 验证。
+1. 新增 `SMPLXBackend`，用默认 pose/shape 生成 mesh。
+2. 导出 `.obj`，交给前端 Viewer 和 Blender 验证。
+3. 将 backend 输出契约接入 `project/backend` pipeline。
 
 ## References
 

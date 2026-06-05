@@ -65,3 +65,7 @@
 - Model：新增 `check-env` 命令，检查 `torch/smplx/trimesh` 和 `models/smpl(x)` 目录。
 - Validation：`cd project/model && python -m pytest -v` 通过，3 passed。
 - Validation：`check-env` 通过；当前 `torch=present`，`smplx/trimesh/models/smpl/models/smplx=missing`。
+- Model Assets：将 Windows E 盘下载的 `models_smplx_v1_1/models/smplx` 复制到项目本地 `models/smplx/`；保留原始下载目录，不执行破坏性移动。
+- Decision：模型权重和公开数据集统一放在仓库根目录 `models/` 或 `data/` 的本地目录中，进入 pipeline 但不提交 Git。
+- Validation：`check-env` 通过；当前 `torch/smplx/trimesh/models/smpl/models/smplx=present`。
+- Validation：`git status --short` 为空，`git status --ignored --short` 显示 `models/` 为 ignored，模型权重未进入 Git 跟踪。
