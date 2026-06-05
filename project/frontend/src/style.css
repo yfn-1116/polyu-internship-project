@@ -24,6 +24,37 @@ body {
   font-size: 22px;
 }
 
+.toolbar {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.mode-button,
+.reset-button {
+  min-height: 36px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #1e293b;
+  font: inherit;
+  cursor: pointer;
+}
+
+.mode-button.active {
+  border-color: #2563eb;
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-weight: 700;
+}
+
+.reset-button {
+  width: 100%;
+  margin-bottom: 8px;
+  background: #f8fafc;
+}
+
 .panel dt {
   margin-top: 14px;
   font-weight: 700;

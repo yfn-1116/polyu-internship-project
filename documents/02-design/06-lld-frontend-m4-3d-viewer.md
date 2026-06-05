@@ -10,6 +10,8 @@
 - 支持旋转、缩放、平移。
 - 显示任务状态、model_type、manifest 路径和输出文件路径。
 - 提供默认样例模型，避免后端真实模型未就绪时前端无法演示。
+- Viewer v2 增加三个样例模式：THuman Scan、SMPL-X Neutral、Sample Proxy。
+- 支持 Reset View，并在加载 mesh 后自动居中和缩放模型。
 
 ## 2) 推荐技术
 
@@ -20,10 +22,11 @@
 ## 3) 核心流程
 
 1. 用户打开 Viewer 页面。
-2. Viewer 加载默认样例 manifest 或用户指定 manifest。
+2. Viewer 默认加载 THuman Scan manifest。
 3. 根据 manifest 找到 mesh 文件。
 4. Three.js 加载 mesh 并展示。
 5. 用户通过鼠标旋转、缩放、平移查看人体模型。
+6. 用户可切换 THuman / SMPL-X / Proxy 三个样例，或点击 Reset View 重置视角。
 
 ## 4) Failure Modes
 
@@ -36,7 +39,9 @@
 
 - 本地启动命令写入 Runbook。
 - 页面能显示一个人体或占位 mesh。
+- 页面能切换 THuman Scan、SMPL-X Neutral 和 Sample Proxy。
 - 旋转、缩放、平移可用。
+- Reset View 可用。
 - 不要求真实皮肤、衣物、纹理、PBR 材质。
 
 ## References

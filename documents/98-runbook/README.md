@@ -101,8 +101,9 @@ npm run dev
 
 - 终端输出 `Local: http://localhost:5173/` 或类似地址。
 - 浏览器打开该地址后显示 `SMPL Viewer`。
-- 页面加载 `public/sample/body.obj`，鼠标可旋转、缩放、平移。
-- 当前默认加载 `public/sample-human/body.obj`，这是低多边形人体 proxy，不是 SMPL 真实模型。
+- 页面默认加载 THuman Scan。
+- 左侧可切换 `THuman`、`SMPL-X`、`Proxy`。
+- 鼠标可旋转、缩放、平移；`Reset View` 可重置视角。
 
 构建验证：
 
@@ -133,14 +134,17 @@ git diff --check
 
 ## Frontend Sample 验证
 
-准备 THuman sample 前端展示资源：
+准备前端展示资源：
 
 ```bash
 cd /home/yfn/polyu-internship-project/project/frontend
-npm run prepare:thuman
+npm run prepare:samples
 ```
 
-该命令会把本地 ignored 的 THuman sample 复制到 `project/frontend/public/sample-thuman/`；该目录不提交 Git。
+该命令会把本地 ignored 的 THuman sample 和 SMPL-X default sample 复制到前端 public 目录；这些目录不提交 Git：
+
+- `project/frontend/public/sample-thuman/`
+- `project/frontend/public/sample-smplx/`
 
 ```bash
 cd /home/yfn/polyu-internship-project/project/frontend
@@ -150,6 +154,8 @@ npm test
 当前通过情况：
 
 - `sample-thuman verified: 289106 vertices, 500000 faces`
+- `sample-smplx verified: 10475 vertices, 20908 faces`
+- `sample-human verified: 48 vertices, 72 faces`
 
 ## Model Module 环境检查
 

@@ -86,3 +86,7 @@
 - Validation：THuman sample CLI smoke 通过，输出 `outputs/job_0525/body.obj`、`manifest.json`、`material0.mtl`、`material0.jpeg`。
 - Validation：`cd project/frontend && npm test` 通过，`sample-thuman verified: 289106 vertices, 500000 faces`。
 - Validation：`cd project/frontend && npm run build` 通过。
+- Frontend：升级 Viewer v2，左侧支持 THuman、SMPL-X、Proxy 三种样例切换，并增加 Reset View 和自动居中缩放。
+- Frontend：新增 `prepare:smplx` 和 `prepare:samples`，将 ignored 的 SMPL-X 默认输出准备为 `public/sample-smplx/`。
+- Validation：`cd project/frontend && npm run prepare:samples && npm test` 通过，三个样例分别为 `289106/500000`、`10475/20908`、`48/72`。
+- Validation：Viewer v2 执行 `cd project/frontend && npm run build` 通过。

@@ -1,6 +1,8 @@
 {
   "scripts": {
+    "prepare:samples": "npm run prepare:thuman && npm run prepare:smplx",
     "prepare:thuman": "node scripts/prepare-thuman-sample.mjs",
+    "prepare:smplx": "node scripts/prepare-smplx-sample.mjs",
     "dev": "vite --host 0.0.0.0",
     "build": "vite build",
     "test": "node scripts/verify-samples.mjs"
