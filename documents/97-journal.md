@@ -78,3 +78,5 @@
 - Validation：`check-env` 通过；`models/smpl` 与 `models/smplx` 均为 present，`git status --short` 为空，`models/` 仍为 ignored。
 - Dataset Decision：补充数据集选择过程；论文使用 multi-pose registrations 和 CAESAR multi-shape registrations，但第一周不复现训练数据，工程主线选择 THuman2.0/2.1，FAUST 作为真实 scan 兜底。
 - Data Policy：真实数据集按 `data/datasets/raw|interim|processed` 本地管理，不提交 Git；Blender/MeshLab 作为旁路验证，不进入主 pipeline。
+- Dataset：clone THuman2.0 GitHub 文档仓库到 `data/datasets/raw/thuman2/THuman2.0-Dataset/`；仓库约 65M，包含 agreement、README、render sample 和 `data_sample/0525/0525.obj` 小样例。
+- Validation：`git status --short` 为空，`git check-ignore` 命中 `data/datasets/`，THuman 文档仓库和样例未进入项目 Git。

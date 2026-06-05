@@ -60,7 +60,22 @@ THuman2.0/2.1：
 
 - 官方入口：`https://github.com/ytrock/THuman2.0-Dataset`
 - 需要阅读 agreement，通过邮件申请下载链接。
-- 拿到链接后放入 `data/datasets/thuman2/`。
+- 文档仓库可 clone，但完整数据仍需申请。
+- 拿到链接后放入 `data/datasets/raw/thuman2/`。
+
+当前本地状态：
+
+- 已 clone 文档仓库到 `data/datasets/raw/thuman2/THuman2.0-Dataset/`。
+- 仓库约 65M，主要包含 README、agreement、示例图片和一个小样例。
+- 可用小样例：`data/datasets/raw/thuman2/THuman2.0-Dataset/data_sample/0525/0525.obj`。
+- 对应纹理和材质：`material0.jpeg`、`material0.mtl`。
+
+README 中的重要信息：
+
+- THuman2.0 包含 500 个高质量人体 scan，每个 scan 提供 `.obj` 和 texture。
+- THuman2.1 将规模扩展到 2500 个模型。
+- 完整数据集加密，需要填写 agreement 并邮件申请下载链接。
+- 仓库说明提供了 SMPL-X fitting parameters/meshes 的下载入口；后续下载后应放入 `data/datasets/raw/thuman2/smplx_fittings/`。
 
 FAUST：
 
