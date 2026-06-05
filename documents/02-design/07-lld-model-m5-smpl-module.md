@@ -71,7 +71,11 @@ PYTHONPATH=src python -m smpl_model export-default-smplx \
 }
 ```
 
-SMPL-X 文件已放置在 `models/smplx/`，包括 female/male/neutral 的 `.npz` 与 `.pkl` 文件。模型权重只参与本地运行，不进入 Git。
+SMPL-X 文件已放置在 `models/smplx/`，包括 female/male/neutral 的 `.npz` 与 `.pkl` 文件。
+
+SMPL v1.1.0 文件已放置在 `models/smpl/SMPL_python_v.1.1.0/`，包括 female/male/neutral 三个 `.pkl` 权重和官方 Python 示例代码。
+
+模型权重只参与本地运行，不进入 Git。
 
 默认 neutral SMPL-X 导出结果：
 
@@ -89,6 +93,7 @@ SMPL-X 文件已放置在 `models/smplx/`，包括 female/male/neutral 的 `.npz
 1. 将 `export_default_smplx` 接入 `project/backend` pipeline。
 2. 将输出 `.obj` 复制或服务化给前端 Viewer。
 3. 增加可配置 shape/pose 参数输入。
+4. 后续如需兼容 SMPL，可基于 `models/smpl/SMPL_python_v.1.1.0/` 增加独立 `SMPLBackend`。
 
 ## References
 

@@ -120,6 +120,20 @@ MVP 目标：一周内跑通“输入样本 -> SMPL/SMPL-X 或可替换 backend 
   - 模型复制后 `git status --short` 无模型文件变更
   - `git status --ignored --short` 显示 `models/` 为 ignored
 
+### S-046 [DONE] SMPL v1.1.0 模型资产放置与环境验证
+
+- Started: 2026-06-05
+- Done: 2026-06-05
+- DoD：
+  - 将本地下载的 SMPL Python v1.1.0 放入 `models/smpl/`。
+  - 确认 `models/` 不进入 Git 跟踪。
+  - 重新执行模型环境检查。
+- Verify：
+  - `PYTHONPATH=src python -m smpl_model check-env --project-root /home/yfn/polyu-internship-project` 通过
+  - 当前结果：`models/smpl=present`，`models/smplx=present`
+  - 模型复制后 `git status --short` 无模型文件变更
+  - `git status --ignored --short` 显示 `models/` 为 ignored
+
 ### S-050 [TODO] DatasetInputAdapter 设计与最小样本接入
 
 - Started: -

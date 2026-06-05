@@ -74,3 +74,5 @@
 - Model：新增 `export-default-smplx`，导出 neutral SMPL-X 默认人体 `.obj` 与 manifest。
 - Validation：`cd project/model && PYTHONPATH=src python -m pytest -v` 通过，4 passed。
 - Validation：`export-default-smplx` 通过，输出 `10475` vertices、`20908` faces 到 `outputs/smplx_default_neutral/`。
+- Model Assets：将 Windows E 盘下载的 `SMPL_python_v.1.1.0` 复制到 `models/smpl/SMPL_python_v.1.1.0/`；包含 male/female/neutral 三个 SMPL `.pkl` 权重和官方 Python 示例代码。
+- Validation：`check-env` 通过；`models/smpl` 与 `models/smplx` 均为 present，`git status --short` 为空，`models/` 仍为 ignored。

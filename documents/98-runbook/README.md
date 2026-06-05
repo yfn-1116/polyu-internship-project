@@ -155,6 +155,13 @@ PYTHONPATH=src python -m smpl_model check-env --project-root /home/yfn/polyu-int
 - `models/smplx/SMPLX_NEUTRAL.npz`
 - 同目录还保留对应 `.pkl` 文件和 `version.txt`
 
+当前 SMPL v1.1.0 文件：
+
+- `models/smpl/SMPL_python_v.1.1.0/smpl/models/basicmodel_f_lbs_10_207_0_v1.1.0.pkl`
+- `models/smpl/SMPL_python_v.1.1.0/smpl/models/basicmodel_m_lbs_10_207_0_v1.1.0.pkl`
+- `models/smpl/SMPL_python_v.1.1.0/smpl/models/basicmodel_neutral_lbs_10_207_0_v1.1.0.pkl`
+- 同目录还保留官方 `smpl_webuser/` 示例代码；后续接 SMPL backend 时可参考，但当前主线仍优先 SMPL-X。
+
 运行模型模块测试：
 
 ```bash
