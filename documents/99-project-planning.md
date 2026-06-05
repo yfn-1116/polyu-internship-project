@@ -213,6 +213,19 @@ MVP 目标：一周内跑通“输入样本 -> SMPL/SMPL-X 或可替换 backend 
   - `PYTHONPATH=src python -m smpl_model check-env --project-root /home/yfn/polyu-internship-project` 通过
   - 当前结果：`torch=present`，`smplx=missing`，`trimesh=missing`，`models/smpl=missing`，`models/smplx=missing`
 
+### S-095 [DONE] Folder README Documentation Sweep
+
+- Started: 2026-06-05
+- Done: 2026-06-05
+- DoD：
+  - 主要代码目录都有 README 说明职责。
+  - `data/` 和 `models/` 有本地资产管理说明。
+  - README 保持简短，便于快速接手。
+  - 不提交真实模型、真实数据集和生成输出。
+- Verify：
+  - `git diff --check` 通过
+  - `git status --ignored --short` 显示 `models/`、`data/datasets/`、`outputs/` 仍为 ignored
+
 ## 4) Backlog（非顺序）
 
 - `[TODO]` FastAPI 服务化：`POST /v1/modeling/jobs`。

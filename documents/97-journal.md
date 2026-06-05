@@ -94,3 +94,5 @@
 - Frontend：Viewer 样例调整为 THuman Scan、SMPL-X Default、SMPL-X Slim、SMPL-X Broad、SMPL-X Tall；这些不是 THuman scan fitting 结果。
 - Validation：`cd project/model && PYTHONPATH=src python -m pytest -v` 通过，5 passed。
 - Validation：`cd project/frontend && npm run prepare:samples && npm test && npm run build` 通过，五个样例均可加载。
+- Docs：补充代码和数据目录级 README，覆盖 `project/backend`、`project/model`、`project/frontend`、`data`、`models` 的职责、关键文件和禁止放置内容。
+- Decision：允许提交 `models/README.md` 作为模型目录说明，但继续忽略模型权重、数据集和生成输出。

@@ -10,7 +10,8 @@ Thumbs.db
 *.log
 .superpowers/
 outputs/
-models/
+models/*
+!models/README.md
 data/datasets/
 data/interim/
 data/processed/
