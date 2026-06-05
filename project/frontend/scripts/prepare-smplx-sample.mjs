@@ -3,36 +3,41 @@ import path from 'node:path';
 import process from 'node:process';
 
 const repoRoot = path.resolve(process.cwd(), '..', '..');
-const outputDir = path.join(repoRoot, 'outputs', 'smplx_default_neutral');
-const sourceObj = path.join(outputDir, 'body.obj');
-const publicSampleDir = path.join(process.cwd(), 'public', 'sample-smplx');
+const variants = ['neutral', 'male', 'female'];
 
-if (!fs.existsSync(sourceObj)) {
-  throw new Error(`missing SMPL-X OBJ: ${sourceObj}`);
-}
+for (const gender of variants) {
+  const outputDir = path.join(repoRoot, 'outputs', `smplx_default_${gender}`);
+  const sourceObj = path.join(outputDir, 'body.obj');
+  const sampleName = `sample-smplx-${gender}`;
+  const publicSampleDir = path.join(process.cwd(), 'public', sampleName);
 
-fs.mkdirSync(publicSampleDir, { recursive: true });
-fs.copyFileSync(sourceObj, path.join(publicSampleDir, 'body.obj'));
+  if (!fs.existsSync(sourceObj)) {
+    throw new Error(`missing SMPL-X OBJ: ${sourceObj}`);
+  }
 
-const manifest = {
-  task_id: 'job_smplx_default_neutral',
-  body_input_source: 'smplx-default',
-  result: {
-    task_id: 'job_smplx_default_neutral',
-    model_type: 'smplx-neutral',
-    status: 'success',
-    output_paths: {
-      mesh: '/sample-smplx/body.obj',
-      manifest: '/sample-smplx/manifest.json',
+  fs.mkdirSync(publicSampleDir, { recursive: true });
+  fs.copyFileSync(sourceObj, path.join(publicSampleDir, 'body.obj'));
+
+  const manifest = {
+    task_id: `job_smplx_default_${gender}`,
+    body_input_source: 'smplx-default',
+    result: {
+      task_id: `job_smplx_default_${gender}`,
+      model_type: `smplx-${gender}`,
+      status: 'success',
+      output_paths: {
+        mesh: `/${sampleName}/body.obj`,
+        manifest: `/${sampleName}/manifest.json`,
+      },
+      errors: [],
     },
-    errors: [],
-  },
-};
+  };
 
-fs.writeFileSync(
-  path.join(publicSampleDir, 'manifest.json'),
-  `${JSON.stringify(manifest, null, 2)}\n`,
-  'utf8',
-);
+  fs.writeFileSync(
+    path.join(publicSampleDir, 'manifest.json'),
+    `${JSON.stringify(manifest, null, 2)}\n`,
+    'utf8',
+  );
 
-console.log(`prepared SMPL-X sample at ${publicSampleDir}`);
+  console.log(`prepared SMPL-X ${gender} sample at ${publicSampleDir}`);
+}

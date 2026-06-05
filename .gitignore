@@ -28,3 +28,6 @@ dist/
 build/
 project/frontend/public/sample-thuman/
 project/frontend/public/sample-smplx/
+project/frontend/public/sample-smplx-neutral/
+project/frontend/public/sample-smplx-male/
+project/frontend/public/sample-smplx-female/

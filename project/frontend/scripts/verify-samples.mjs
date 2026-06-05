@@ -5,8 +5,9 @@ import process from 'node:process';
 const root = process.cwd();
 const requiredSamples = [
   ['sample-thuman', 1000, 1000],
-  ['sample-smplx', 1000, 1000],
-  ['sample-human', 20, 20],
+  ['sample-smplx-neutral', 1000, 1000],
+  ['sample-smplx-male', 1000, 1000],
+  ['sample-smplx-female', 1000, 1000],
 ];
 
 for (const [sampleName, minVertices, minFaces] of requiredSamples) {

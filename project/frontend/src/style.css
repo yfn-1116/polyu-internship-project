@@ -31,8 +31,7 @@ body {
   margin-bottom: 12px;
 }
 
-.mode-button,
-.reset-button {
+.mode-button {
   min-height: 36px;
   border: 1px solid #cbd5e1;
   border-radius: 6px;
@@ -47,12 +46,6 @@ body {
   background: #eff6ff;
   color: #1d4ed8;
   font-weight: 700;
-}
-
-.reset-button {
-  width: 100%;
-  margin-bottom: 8px;
-  background: #f8fafc;
 }
 
 .panel dt {

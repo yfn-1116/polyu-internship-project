@@ -8,13 +8,13 @@ const statusEl = document.getElementById('status');
 const taskEl = document.getElementById('task-id');
 const modelEl = document.getElementById('model-type');
 const meshEl = document.getElementById('mesh-path');
-const resetButton = document.getElementById('reset-view');
 const modeButtons = [...document.querySelectorAll('.mode-button')];
 
 const samples = {
   thuman: '/sample-thuman/manifest.json',
-  smplx: '/sample-smplx/manifest.json',
-  proxy: '/sample-human/manifest.json',
+  smplxNeutral: '/sample-smplx-neutral/manifest.json',
+  smplxMale: '/sample-smplx-male/manifest.json',
+  smplxFemale: '/sample-smplx-female/manifest.json',
 };
 
 const scene = new THREE.Scene();
@@ -105,12 +105,6 @@ function frameObject(object) {
   controls.update();
 }
 
-function resetView() {
-  if (currentObject) {
-    frameObject(currentObject);
-  }
-}
-
 function setActiveButton(sampleKey) {
   modeButtons.forEach((button) => {
     button.classList.toggle('active', button.dataset.sample === sampleKey);
@@ -137,8 +131,6 @@ function loadSample(sampleKey) {
 modeButtons.forEach((button) => {
   button.addEventListener('click', () => loadSample(button.dataset.sample));
 });
-
-resetButton.addEventListener('click', resetView);
 
 function animate() {
   controls.update();
