@@ -140,6 +140,7 @@ MVP 目标：一周内跑通“输入样本 -> SMPL/SMPL-X 或可替换 backend 
 - Done: -
 - DoD：
   - THuman2.0 申请/下载状态记录在 Journal 和风险文档。
+  - 数据集选择过程记录在 Knowledge Base。
   - 若数据不可得，使用可公开样本或 synthetic 样本完成 adapter 流程。
   - 数据不提交入 Git。
 
@@ -216,3 +217,5 @@ MVP 目标：一周内跑通“输入样本 -> SMPL/SMPL-X 或可替换 backend 
 - DEC-20260605-006：第一周增加最小前端 3D Viewer，商业级真实渲染作为后续产品化方向。
 - DEC-20260605-007：模型权重保存在本地 `models/`，只作为运行资产，不提交 Git；复制 Windows 下载目录到 WSL 项目目录时保留原始文件。
 - DEC-20260605-008：数据集和模型主线并行推进；第一周主线用 SMPL-X 默认人体保证可展示，支线申请/下载 THuman2.0 或 FAUST。
+- DEC-20260605-009：数据集选择采用“论文背景 + 工程可得性”双重判断；CAESAR/论文 registrations 只作为训练数据背景，主数据集选 THuman2.0/2.1，FAUST 作为真实 scan 兜底。
+- DEC-20260605-010：真实数据集按 `data/datasets/raw|interim|processed` 本地管理，不提交 Git；Blender/MeshLab 只作为旁路验证和离线渲染工具。

@@ -76,3 +76,5 @@
 - Validation：`export-default-smplx` 通过，输出 `10475` vertices、`20908` faces 到 `outputs/smplx_default_neutral/`。
 - Model Assets：将 Windows E 盘下载的 `SMPL_python_v.1.1.0` 复制到 `models/smpl/SMPL_python_v.1.1.0/`；包含 male/female/neutral 三个 SMPL `.pkl` 权重和官方 Python 示例代码。
 - Validation：`check-env` 通过；`models/smpl` 与 `models/smplx` 均为 present，`git status --short` 为空，`models/` 仍为 ignored。
+- Dataset Decision：补充数据集选择过程；论文使用 multi-pose registrations 和 CAESAR multi-shape registrations，但第一周不复现训练数据，工程主线选择 THuman2.0/2.1，FAUST 作为真实 scan 兜底。
+- Data Policy：真实数据集按 `data/datasets/raw|interim|processed` 本地管理，不提交 Git；Blender/MeshLab 作为旁路验证，不进入主 pipeline。

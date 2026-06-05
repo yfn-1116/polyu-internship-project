@@ -11,6 +11,9 @@ Thumbs.db
 .superpowers/
 outputs/
 models/
+data/datasets/
+data/interim/
+data/processed/
 
 # Python
 __pycache__/
