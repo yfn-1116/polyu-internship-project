@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 
 from smpl_model.app.environment_check import check_environment
-from smpl_model.app.smplx_export import export_default_smplx
+from smpl_model.app.smplx_export import SHAPE_PRESETS, export_default_smplx
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -39,6 +39,12 @@ def build_parser() -> argparse.ArgumentParser:
         default="neutral",
         help="SMPL-X model gender",
     )
+    export_parser.add_argument(
+        "--shape-preset",
+        choices=tuple(SHAPE_PRESETS),
+        default="default",
+        help="simple SMPL-X beta preset for demo generation",
+    )
     return parser
 
 
@@ -56,6 +62,7 @@ def main(argv: list[str] | None = None) -> int:
             project_root=Path(args.project_root).resolve(),
             output_dir=Path(args.output_dir).resolve(),
             gender=args.gender,
+            shape_preset=args.shape_preset,
         )
         print(json.dumps(result.to_dict(), indent=2, ensure_ascii=False))
         return 0

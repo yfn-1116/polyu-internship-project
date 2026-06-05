@@ -90,3 +90,7 @@
 - Frontend：`prepare:smplx` 生成 `public/sample-smplx-neutral|male|female/` 三组 ignored 展示样例。
 - Validation：`cd project/frontend && npm run prepare:samples && npm test` 通过，四个样例分别为 `289106/500000`、`10475/20908`、`10475/20908`、`10475/20908`。
 - Validation：Viewer v2 执行 `cd project/frontend && npm run build` 通过。
+- Model：`export-default-smplx` 增加 `--shape-preset`，支持 default/slim/broad/tall/short，用于生成多组 SMPL-X beta preset 演示模型。
+- Frontend：Viewer 样例调整为 THuman Scan、SMPL-X Default、SMPL-X Slim、SMPL-X Broad、SMPL-X Tall；这些不是 THuman scan fitting 结果。
+- Validation：`cd project/model && PYTHONPATH=src python -m pytest -v` 通过，5 passed。
+- Validation：`cd project/frontend && npm run prepare:samples && npm test && npm run build` 通过，五个样例均可加载。

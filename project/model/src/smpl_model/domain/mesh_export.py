@@ -8,6 +8,7 @@ from pathlib import Path
 class MeshExportResult:
     model_type: str
     gender: str
+    shape_preset: str
     vertices_count: int
     faces_count: int
     obj_path: Path

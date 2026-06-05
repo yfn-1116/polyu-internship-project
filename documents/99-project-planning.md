@@ -189,13 +189,14 @@ MVP 目标：一周内跑通“输入样本 -> SMPL/SMPL-X 或可替换 backend 
 - Started: 2026-06-05
 - Done: 2026-06-05
 - DoD：
-  - Viewer 支持 THuman Scan、SMPL-X Neutral、SMPL-X Male、SMPL-X Female 四个样例切换。
+  - Viewer 支持 THuman Scan 和多组 SMPL-X shape preset 样例切换。
   - Proxy 和 Reset View 从演示界面移除。
   - 加载 mesh 后自动居中和缩放。
   - THuman 和 SMPL-X public 样例由脚本生成，不提交 Git。
+  - 文档说明 preset 不是 THuman fitting 结果。
 - Verify：
   - `cd project/frontend && npm run prepare:samples && npm test` 通过
-  - 当前结果：`sample-thuman=289106/500000`，`sample-smplx-neutral=10475/20908`，`sample-smplx-male=10475/20908`，`sample-smplx-female=10475/20908`
+  - 当前结果：`sample-thuman=289106/500000`，`sample-smplx-default|slim|broad|tall=10475/20908`
   - `cd project/frontend && npm run build` 通过
 
 ### S-090 [DONE] Model Module Skeleton & Environment Check

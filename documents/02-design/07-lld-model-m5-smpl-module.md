@@ -45,6 +45,14 @@ PYTHONPATH=src python -m smpl_model export-default-smplx \
   --gender neutral
 ```
 
+```bash
+PYTHONPATH=src python -m smpl_model export-default-smplx \
+  --project-root /home/yfn/polyu-internship-project \
+  --output-dir /home/yfn/polyu-internship-project/outputs/smplx_preset_broad \
+  --gender neutral \
+  --shape-preset broad
+```
+
 检查项：
 
 - `torch`
@@ -87,6 +95,16 @@ SMPL v1.1.0 文件已放置在 `models/smpl/SMPL_python_v.1.1.0/`，包括 femal
   "faces_count": 20908
 }
 ```
+
+当前 shape preset：
+
+- `default`
+- `slim`
+- `broad`
+- `tall`
+- `short`
+
+这些 preset 用于演示 SMPL-X shape 参数变化，不代表对某个 raw scan 的真实 fitting。
 
 ## 5) 后续实现路径
 

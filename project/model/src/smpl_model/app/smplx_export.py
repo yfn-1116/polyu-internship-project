@@ -11,16 +11,27 @@ from smpl_model.domain.mesh_export import MeshExportResult
 
 
 SUPPORTED_GENDERS = {"neutral", "male", "female"}
+SHAPE_PRESETS = {
+    "default": [0.0] * 10,
+    "slim": [-2.0, 0.6, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+    "broad": [2.0, -0.4, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+    "tall": [0.0, 2.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+    "short": [0.0, -2.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+}
 
 
 def export_default_smplx(
     project_root: Path,
     output_dir: Path,
     gender: str = "neutral",
+    shape_preset: str = "default",
 ) -> MeshExportResult:
     normalized_gender = gender.lower()
     if normalized_gender not in SUPPORTED_GENDERS:
         raise ValueError(f"unsupported gender: {gender}")
+    normalized_preset = shape_preset.lower()
+    if normalized_preset not in SHAPE_PRESETS:
+        raise ValueError(f"unsupported shape_preset: {shape_preset}")
 
     model_dir = project_root / "models" / "smplx"
     if not model_dir.is_dir():
@@ -44,7 +55,8 @@ def export_default_smplx(
     body_model.eval()
 
     with torch.no_grad():
-        output = body_model(return_verts=True)
+        betas = torch.tensor([SHAPE_PRESETS[normalized_preset]], dtype=torch.float32)
+        output = body_model(betas=betas, return_verts=True)
 
     vertices = output.vertices.detach().cpu().numpy()[0]
     faces = body_model.faces
@@ -55,6 +67,7 @@ def export_default_smplx(
     result = MeshExportResult(
         model_type="smplx",
         gender=normalized_gender,
+        shape_preset=normalized_preset,
         vertices_count=int(vertices.shape[0]),
         faces_count=int(faces.shape[0]),
         obj_path=obj_path,

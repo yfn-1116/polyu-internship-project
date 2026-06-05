@@ -12,9 +12,10 @@ const modeButtons = [...document.querySelectorAll('.mode-button')];
 
 const samples = {
   thuman: '/sample-thuman/manifest.json',
-  smplxNeutral: '/sample-smplx-neutral/manifest.json',
-  smplxMale: '/sample-smplx-male/manifest.json',
-  smplxFemale: '/sample-smplx-female/manifest.json',
+  smplxDefault: '/sample-smplx-default/manifest.json',
+  smplxSlim: '/sample-smplx-slim/manifest.json',
+  smplxBroad: '/sample-smplx-broad/manifest.json',
+  smplxTall: '/sample-smplx-tall/manifest.json',
 };
 
 const scene = new THREE.Scene();

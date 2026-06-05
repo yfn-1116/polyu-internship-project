@@ -102,7 +102,7 @@ npm run dev
 - 终端输出 `Local: http://localhost:5173/` 或类似地址。
 - 浏览器打开该地址后显示 `SMPL Viewer`。
 - 页面默认加载 THuman Scan。
-- 左侧可切换 `THuman Scan`、`SMPL-X Neutral`、`SMPL-X Male`、`SMPL-X Female`。
+- 左侧可切换 `THuman Scan`、`SMPL-X Default`、`SMPL-X Slim`、`SMPL-X Broad`、`SMPL-X Tall`。
 - 鼠标可旋转、缩放、平移。
 
 构建验证：
@@ -144,9 +144,10 @@ npm run prepare:samples
 该命令会把本地 ignored 的 THuman sample 和 SMPL-X default sample 复制到前端 public 目录；这些目录不提交 Git：
 
 - `project/frontend/public/sample-thuman/`
-- `project/frontend/public/sample-smplx-neutral/`
-- `project/frontend/public/sample-smplx-male/`
-- `project/frontend/public/sample-smplx-female/`
+- `project/frontend/public/sample-smplx-default/`
+- `project/frontend/public/sample-smplx-slim/`
+- `project/frontend/public/sample-smplx-broad/`
+- `project/frontend/public/sample-smplx-tall/`
 
 ```bash
 cd /home/yfn/polyu-internship-project/project/frontend
@@ -156,9 +157,10 @@ npm test
 当前通过情况：
 
 - `sample-thuman verified: 289106 vertices, 500000 faces`
-- `sample-smplx-neutral verified: 10475 vertices, 20908 faces`
-- `sample-smplx-male verified: 10475 vertices, 20908 faces`
-- `sample-smplx-female verified: 10475 vertices, 20908 faces`
+- `sample-smplx-default verified: 10475 vertices, 20908 faces`
+- `sample-smplx-slim verified: 10475 vertices, 20908 faces`
+- `sample-smplx-broad verified: 10475 vertices, 20908 faces`
+- `sample-smplx-tall verified: 10475 vertices, 20908 faces`
 
 ## Model Module 环境检查
 

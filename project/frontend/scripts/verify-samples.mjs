@@ -5,9 +5,10 @@ import process from 'node:process';
 const root = process.cwd();
 const requiredSamples = [
   ['sample-thuman', 1000, 1000],
-  ['sample-smplx-neutral', 1000, 1000],
-  ['sample-smplx-male', 1000, 1000],
-  ['sample-smplx-female', 1000, 1000],
+  ['sample-smplx-default', 1000, 1000],
+  ['sample-smplx-slim', 1000, 1000],
+  ['sample-smplx-broad', 1000, 1000],
+  ['sample-smplx-tall', 1000, 1000],
 ];
 
 for (const [sampleName, minVertices, minFaces] of requiredSamples) {

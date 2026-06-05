@@ -3,12 +3,17 @@ import path from 'node:path';
 import process from 'node:process';
 
 const repoRoot = path.resolve(process.cwd(), '..', '..');
-const variants = ['neutral', 'male', 'female'];
+const variants = [
+  ['default', 'SMPL-X Default'],
+  ['slim', 'SMPL-X Slim'],
+  ['broad', 'SMPL-X Broad'],
+  ['tall', 'SMPL-X Tall'],
+];
 
-for (const gender of variants) {
-  const outputDir = path.join(repoRoot, 'outputs', `smplx_default_${gender}`);
+for (const [preset, label] of variants) {
+  const outputDir = path.join(repoRoot, 'outputs', `smplx_preset_${preset}`);
   const sourceObj = path.join(outputDir, 'body.obj');
-  const sampleName = `sample-smplx-${gender}`;
+  const sampleName = `sample-smplx-${preset}`;
   const publicSampleDir = path.join(process.cwd(), 'public', sampleName);
 
   if (!fs.existsSync(sourceObj)) {
@@ -19,11 +24,11 @@ for (const gender of variants) {
   fs.copyFileSync(sourceObj, path.join(publicSampleDir, 'body.obj'));
 
   const manifest = {
-    task_id: `job_smplx_default_${gender}`,
+    task_id: `job_smplx_preset_${preset}`,
     body_input_source: 'smplx-default',
     result: {
-      task_id: `job_smplx_default_${gender}`,
-      model_type: `smplx-${gender}`,
+      task_id: `job_smplx_preset_${preset}`,
+      model_type: label,
       status: 'success',
       output_paths: {
         mesh: `/${sampleName}/body.obj`,
@@ -39,5 +44,5 @@ for (const gender of variants) {
     'utf8',
   );
 
-  console.log(`prepared SMPL-X ${gender} sample at ${publicSampleDir}`);
+  console.log(`prepared ${label} sample at ${publicSampleDir}`);
 }
