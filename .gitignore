@@ -26,3 +26,4 @@ venv/
 node_modules/
 dist/
 build/
+project/frontend/public/sample-thuman/

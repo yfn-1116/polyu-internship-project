@@ -134,15 +134,20 @@ MVP 目标：一周内跑通“输入样本 -> SMPL/SMPL-X 或可替换 backend 
   - 模型复制后 `git status --short` 无模型文件变更
   - `git status --ignored --short` 显示 `models/` 为 ignored
 
-### S-050 [TODO] DatasetInputAdapter 设计与最小样本接入
+### S-050 [DONE] DatasetInputAdapter 设计与最小样本接入
 
-- Started: -
-- Done: -
+- Started: 2026-06-05
+- Done: 2026-06-05
 - DoD：
   - THuman2.0 申请/下载状态记录在 Journal 和风险文档。
   - 数据集选择过程记录在 Knowledge Base。
   - 若数据不可得，使用可公开样本或 synthetic 样本完成 adapter 流程。
   - 数据不提交入 Git。
+- Verify：
+  - `cd project/backend && PYTHONPATH=src python -m pytest -v` 通过，9 passed
+  - `PYTHONPATH=project/backend/src python -m smpl_service run --source-type dataset-obj --input-path data/datasets/raw/thuman2/THuman2.0-Dataset/data_sample/0525/0525.obj --model-type passthrough --output-dir outputs` 通过
+  - `cd project/frontend && npm run prepare:thuman && npm test && npm run build` 通过
+  - 当前前端样例：`sample-thuman verified: 289106 vertices, 500000 faces`
 
 ### S-060 [TODO] 最小 API/CLI 契约固化
 

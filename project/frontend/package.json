@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "prepare:thuman": "node scripts/prepare-thuman-sample.mjs",
     "dev": "vite --host 0.0.0.0",
     "build": "vite build",
     "test": "node scripts/verify-samples.mjs"

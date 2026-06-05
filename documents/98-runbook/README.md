@@ -4,7 +4,7 @@
 
 ## 当前运行状态
 
-后端 Python 骨架、mock pipeline、前端 3D Viewer、模型环境检查和默认 SMPL-X mesh 导出已可运行。下一步是把模型模块输出接入后端 pipeline 和前端 Viewer。
+后端 Python 骨架、mock pipeline、THuman sample dataset-obj pipeline、前端 3D Viewer、模型环境检查和默认 SMPL-X mesh 导出已可运行。下一步是把模型模块输出接入后端 pipeline。
 
 ## 本地环境检查
 
@@ -43,6 +43,26 @@ PYTHONPATH=project/backend/src python -m smpl_service run \
 - 生成 `outputs/job_sample_001/manifest.json`。
 - 生成 `outputs/job_sample_001/body.obj`。
 
+## Backend THuman Sample Pipeline
+
+运行 THuman sample OBJ passthrough pipeline：
+
+```bash
+cd /home/yfn/polyu-internship-project
+PYTHONPATH=project/backend/src python -m smpl_service run \
+  --source-type dataset-obj \
+  --input-path data/datasets/raw/thuman2/THuman2.0-Dataset/data_sample/0525/0525.obj \
+  --model-type passthrough \
+  --output-dir outputs
+```
+
+成功标志：
+
+- 命令退出码为 0。
+- 生成 `outputs/job_0525/manifest.json`。
+- 生成 `outputs/job_0525/body.obj`。
+- 同目录复制 `material0.mtl` 和 `material0.jpeg`，方便 OBJ 材质检查。
+
 ## Backend 验证命令
 
 运行后端测试：
@@ -54,7 +74,7 @@ python -m pytest -v
 
 当前通过情况：
 
-- `7 passed`
+- `9 passed`
 
 ## Frontend 3D Viewer
 
@@ -113,6 +133,15 @@ git diff --check
 
 ## Frontend Sample 验证
 
+准备 THuman sample 前端展示资源：
+
+```bash
+cd /home/yfn/polyu-internship-project/project/frontend
+npm run prepare:thuman
+```
+
+该命令会把本地 ignored 的 THuman sample 复制到 `project/frontend/public/sample-thuman/`；该目录不提交 Git。
+
 ```bash
 cd /home/yfn/polyu-internship-project/project/frontend
 npm test
@@ -120,7 +149,7 @@ npm test
 
 当前通过情况：
 
-- `sample-human verified: 48 vertices, 72 faces`
+- `sample-thuman verified: 289106 vertices, 500000 faces`
 
 ## Model Module 环境检查
 

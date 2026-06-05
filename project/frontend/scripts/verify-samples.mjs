@@ -3,7 +3,10 @@ import path from 'node:path';
 import process from 'node:process';
 
 const root = process.cwd();
-const manifestPath = path.join(root, 'public', 'sample-human', 'manifest.json');
+const sampleName = fs.existsSync(path.join(root, 'public', 'sample-thuman', 'manifest.json'))
+  ? 'sample-thuman'
+  : 'sample-human';
+const manifestPath = path.join(root, 'public', sampleName, 'manifest.json');
 
 if (!fs.existsSync(manifestPath)) {
   throw new Error(`missing manifest: ${manifestPath}`);
@@ -34,4 +37,4 @@ if (faceCount < 20) {
   throw new Error(`expected at least 20 faces, got ${faceCount}`);
 }
 
-console.log(`sample-human verified: ${vertexCount} vertices, ${faceCount} faces`);
+console.log(`${sampleName} verified: ${vertexCount} vertices, ${faceCount} faces`);

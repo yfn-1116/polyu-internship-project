@@ -42,9 +42,17 @@ function resize() {
 window.addEventListener('resize', resize);
 
 async function loadManifest() {
+  const response = await fetch('/sample-thuman/manifest.json');
+  if (!response.ok) {
+    return loadFallbackManifest();
+  }
+  return response.json();
+}
+
+async function loadFallbackManifest() {
   const response = await fetch('/sample-human/manifest.json');
   if (!response.ok) {
-    throw new Error(`failed to load manifest: ${response.status}`);
+    throw new Error(`failed to load fallback manifest: ${response.status}`);
   }
   return response.json();
 }

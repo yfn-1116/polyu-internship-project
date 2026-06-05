@@ -80,3 +80,9 @@
 - Data Policy：真实数据集按 `data/datasets/raw|interim|processed` 本地管理，不提交 Git；Blender/MeshLab 作为旁路验证，不进入主 pipeline。
 - Dataset：clone THuman2.0 GitHub 文档仓库到 `data/datasets/raw/thuman2/THuman2.0-Dataset/`；仓库约 65M，包含 agreement、README、render sample 和 `data_sample/0525/0525.obj` 小样例。
 - Validation：`git status --short` 为空，`git check-ignore` 命中 `data/datasets/`，THuman 文档仓库和样例未进入项目 Git。
+- Backend：新增 `DatasetObjInputAdapter` 和 `PassthroughModelBackend`，用 THuman sample `0525.obj` 跑通真实 OBJ 输入链路。
+- Frontend：新增 `prepare:thuman` 脚本，将 ignored 的 THuman sample 复制到 ignored 的 `public/sample-thuman/`；Viewer 优先加载 `sample-thuman`，缺失时回退到 `sample-human`。
+- Validation：`cd project/backend && PYTHONPATH=src python -m pytest -v` 通过，9 passed。
+- Validation：THuman sample CLI smoke 通过，输出 `outputs/job_0525/body.obj`、`manifest.json`、`material0.mtl`、`material0.jpeg`。
+- Validation：`cd project/frontend && npm test` 通过，`sample-thuman verified: 289106 vertices, 500000 faces`。
+- Validation：`cd project/frontend && npm run build` 通过。

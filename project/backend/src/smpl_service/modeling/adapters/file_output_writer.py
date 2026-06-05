@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import shutil
 from pathlib import Path
 
 from smpl_service.modeling.domain.contracts import Manifest
@@ -18,6 +19,14 @@ class FileOutputWriter:
         return manifest_path
 
     def _write_obj(self, mesh: MeshData, output_path: Path) -> None:
+        if mesh.source_obj_path is not None:
+            shutil.copyfile(mesh.source_obj_path, output_path)
+            for sidecar_name in ("material0.mtl", "material0.jpeg"):
+                sidecar_path = mesh.source_obj_path.with_name(sidecar_name)
+                if sidecar_path.exists():
+                    shutil.copyfile(sidecar_path, output_path.with_name(sidecar_name))
+            return
+
         lines = ["# mock body mesh"]
         for vertex in mesh.vertices:
             lines.append(f"v {vertex[0]} {vertex[1]} {vertex[2]}")
