@@ -1,44 +1,31 @@
-# 香港理工大学实习项目文档总览
+# Documents 总览（SMPL Body Modeling Service）
 
-这个目录用于集中管理项目的需求分析、系统设计、技术选型、开发日志、问题记录和交接资料。当前仓库先作为项目文档壳子使用，后续再根据实际任务逐步补充代码、实验、数据和部署内容。
+本目录用于沉淀项目从需求、设计、实现、验证到交接的全部工程记录。风格参考 `quant_platform/documents`：主线用 Tracker 推进，日常用 Journal 记录，设计按 HLD/LLD 分层，FAQ 解释原因，Runbook 只写操作。
 
-## 文档目标
+## 读者怎么开始
 
-1. 让项目背景、目标和边界可以被快速理解。
-2. 让需求、设计、技术选型和开发过程有清晰记录。
-3. 让前端、后端、数据、部署等模块在整体架构中的位置明确。
-4. 让后续接手的人能够知道已经做了什么、为什么这样做、下一步该做什么。
-5. 让项目适合上传 GitHub，并通过 Git 记录长期开发过程。
+1. 先读 `99-project-planning.md`：知道当前任务队列和下一步。
+2. 再读 `97-journal.md`：知道最近做过什么、卡在哪里。
+3. 需要理解目标读 `01-requirements/01-prd.md`。
+4. 需要实现模块读 `02-design/README.md`，再跳到对应 HLD/LLD。
+5. 需要运行项目读 `98-runbook/README.md`。
 
-## 推荐阅读顺序
+## 文档职责
 
-1. `00-project-overview.md`：先了解整个文档体系。
-2. `99-project-planning.md`：查看当前进度、开发路径和交接说明。
-3. `01-requirements/README.md`：整理项目需求和验收标准。
-4. `02-design/README.md`：整理系统架构、模块分层、前后端职责。
-5. `04-challenges/README.md`：查看当前风险、困难和待解决问题。
-6. `98-runbook/README.md`：查看本地开发、测试、部署和排错流程。
-7. `99-knowledge-base/README.md`：查看长期沉淀的资料、链接和学习笔记。
+| 位置 | 职责 |
+| --- | --- |
+| `99-project-planning.md` | 路线图、执行队列、任务 DoD |
+| `97-journal.md` | 每日/每周关键进展、验证、阻塞 |
+| `01-requirements/` | PRD、需求边界、验收标准 |
+| `02-design/` | HLD/LLD、模块边界、接口和数据契约 |
+| `03-faq/` | 为什么这样做、取舍解释 |
+| `04-challenges/` | 风险、阻塞、兜底方案 |
+| `98-runbook/` | 安装、运行、测试、排错 |
+| `99-knowledge-base/` | 论文、数据集、工具资料 |
 
-## 目录结构
+## 写作规则
 
-```text
-documents/
-├── 00-project-overview.md
-├── 01-requirements/
-├── 02-design/
-├── 03-faq/
-├── 04-challenges/
-├── 98-runbook/
-├── 99-knowledge-base/
-└── 99-project-planning.md
-```
-
-## 文档维护规则
-
-- 所有说明文档优先使用中文编写，必要的技术术语可以保留英文。
-- 每个重要决定都要写清楚背景、选择、原因和影响。
-- 每次完成阶段性工作后，都要更新 `99-project-planning.md`。
-- 如果某个问题反复出现，要沉淀到 `03-faq/` 或 `98-runbook/`。
-- 如果某个资料后续还会用到，要沉淀到 `99-knowledge-base/`。
-
+- 文档只写自己负责的内容，不复制大段背景。
+- 需求变更先更新 PRD；架构变更更新 HLD；模块细节更新 LLD；操作步骤更新 Runbook。
+- 每次实现后更新 `97-journal.md`，关键任务状态更新 `99-project-planning.md`。
+- 重要取舍写 FAQ 或 Challenges，并在 HLD/LLD 中引用。

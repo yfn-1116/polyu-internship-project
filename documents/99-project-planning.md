@@ -1,73 +1,181 @@
-# 项目规划与开发日志
+# 项目计划 + Tracker（SMPL Body Modeling Service）
 
-这个文件用于记录项目从需求分析到设计、开发、测试、部署、交接的完整路径。它的目标不是写流水账，而是让后续接手的人能够理解：这段时间做了什么、为什么这样做、当前卡在哪里、下一步应该怎么继续。
+本文是本项目的“路线图 + 执行队列 + 进度追踪”。开发过程的日更日志写在 `documents/97-journal.md`；本文聚焦任务状态、执行顺序和 DoD。
 
-## 当前状态
+## 0) 使用方式（Plan + Tracker）
 
-- 项目阶段：文档壳子已创建。
-- 需求状态：待梳理。
-- 设计状态：待梳理。
-- 技术选型状态：待讨论。
-- 实现状态：尚未开始。
-- Git 状态：本地仓库已初始化，等待创建 GitHub 远程仓库并推送。
+目标：让接手者和 Codex 都能按同一顺序继续推进，不需要重新翻聊天记录。
 
-## 开发时间线
+规则：
 
-| 日期 | 完成内容 | 决策 / 产出 | 下一步 |
-| --- | --- | --- | --- |
-| 2026-06-05 | 创建初始项目文档结构。 | 使用 `documents/` 管理需求、设计、FAQ、挑战、运行手册和知识库。 | 开始梳理项目背景和需求边界。 |
-| 2026-06-05 | 将文档模板改为中文。 | 强化交接导向，补充每个模块的用途说明。 | 创建 GitHub 仓库并推送项目。 |
+1. 永远从 `## 3) 执行队列` 顶部选择第一个 `[TODO]` 任务。
+2. 开始前改为 `[DOING]`，填写 `Started: YYYY-MM-DD`。
+3. 完成后改为 `[DONE]`，填写 `Done: YYYY-MM-DD`，并补齐实际修改文件和验证命令。
+4. 遇到阻塞改为 `[BLOCKED]`，写清阻塞原因、需要什么、可绕行方案。
+5. 每次改代码或接口后，同步更新 PRD/HLD/LLD/Runbook/Journal 中相关部分。
 
-## 建议开发路径
+状态：`[TODO]` 未开始，`[DOING]` 进行中，`[DONE]` 完成，`[BLOCKED]` 阻塞，`[SKIP]` 确认不做。
 
-1. 明确实习项目背景、导师要求、最终交付物和时间节点。
-2. 在 `01-requirements/` 中拆解用户角色、业务流程、功能需求和验收标准。
-3. 在 `02-design/` 中说明项目在整体架构中的位置，例如它是前端页面、后端服务、数据处理模块、模型服务，还是部署工具。
-4. 按模块拆分前端、后端、数据、接口、部署等职责，避免所有内容混在一起。
-5. 在技术选型时记录备选方案、优缺点、最终选择和原因。
-6. 每完成一个阶段，在本文件记录开发过程、关键文件、遗留问题和下一步。
-7. 项目进入实现阶段后，保持小步提交，Git commit 信息要清楚说明变更目的。
+## 1) 入口与文档索引
 
-## 开发日志维护规则
+- PRD：`documents/01-requirements/01-prd.md`
+- Design README：`documents/02-design/README.md`
+- HLD：`documents/02-design/01-hld-smpl-service.md`
+- LLD M0 全局约束：`documents/02-design/02-lld-foundations-m0-overview.md`
+- LLD M1 输入适配：`documents/02-design/03-lld-data-m1-input-adapters.md`
+- LLD M2 模型后端：`documents/02-design/04-lld-model-m2-smpl-backend.md`
+- LLD M3 API/CLI：`documents/02-design/05-lld-edge-m3-api-and-cli.md`
+- FAQ：`documents/03-faq/README.md`
+- 风险：`documents/04-challenges/01-technical-risks.md`
+- Runbook：`documents/98-runbook/README.md`
+- Codex Prompt：`documents/98-runbook/99-prompt.md`
+- Knowledge Base：`documents/99-knowledge-base/README.md`
+- Journal：`documents/97-journal.md`
 
-后续所有需求分析、设计讨论、技术判断、实现路径、问题排查和交接信息都要持续写入本文件。每次更新建议包含：
+## 2) 里程碑（Milestones）
 
-- 时间：什么时候做的。
-- 背景：为什么要做这件事。
-- 内容：实际做了什么。
-- 判断：做了哪些选择，为什么这样选。
-- 影响：影响哪些需求、模块、文件或后续工作。
-- 下一步：后续应该继续做什么。
+MVP 目标：一周内跑通“输入样本 -> SMPL/SMPL-X 或可替换 backend -> mesh/params/manifest 输出 -> 最小 3D Viewer 展示”的可复现前后端闭环，并保留后续医院 3D 扫描仪接入边界。
 
-如果某次分析内容比较长，可以在对应目录中新建独立文档，然后在本文件的时间线里链接过去。
+- M0 Docs & Scope：PRD/HLD/LLD/Runbook/Journal 文档体系建立。
+- M1 Engineering Skeleton：Python 项目骨架、配置、CLI、输出目录、测试框架。
+- M2 Mock Pipeline：mock/synthetic 输入跑通完整 pipeline。
+- M3 SMPL/SMPL-X Backend：接入真实模型库或明确模型资源阻塞下的替代 backend。
+- M4 Dataset Adapter：THuman2.0 优先，数据不可得时用可公开样本或 mock 兜底。
+- M5 Service Interface：最小 HTTP API 或稳定 CLI 契约，输出 manifest 可被主系统读取。
+- M6 Viewer MVP：最小 3D Viewer 能展示样例或输出 mesh。
+- M7 Handoff：运行手册、风险、下一步任务完整。
 
-## 交接说明
+## 3) 执行队列（按顺序执行）
 
-如果两个月后需要交接，接手者应该先阅读：
+### S-010 [DONE] 文档体系收敛为 PRD/HLD/LLD/Runbook/Journal
 
-1. `documents/00-project-overview.md`
-2. `documents/99-project-planning.md`
-3. `documents/01-requirements/README.md`
-4. `documents/02-design/README.md`
-5. `documents/04-challenges/README.md`
-6. `documents/98-runbook/README.md`
-7. `documents/99-knowledge-base/README.md`
+- Started: -
+- Done: 2026-06-05
+- Scope：
+  - `documents/**`
+- DoD：
+  - `99-project-planning.md` 可作为 tracker 使用。
+  - `97-journal.md` 可记录每日进展。
+  - PRD/HLD/LLD/Runbook/FAQ/Knowledge Base 职责清楚，无重复大段背景。
+- Verify：
+  - `git diff --check` 通过
 
-交接时至少需要确认：
+### S-020 [DONE] Python 工程骨架与配置
 
-- 当前项目目标是否已经明确。
-- 哪些需求已经确认，哪些还没有确认。
-- 当前设计是否已经通过导师或团队认可。
-- 哪些模块已经完成，哪些模块还没有开始。
-- 当前 GitHub 仓库、分支、提交和 issue 是否清楚。
-- 本地启动、测试、部署流程是否可以复现。
+- Started: 2026-06-05
+- Done: 2026-06-05
+- Scope：
+  - `project/` 或仓库约定代码目录
+  - `documents/98-runbook/**`
+- DoD：
+  - 有可安装依赖文件。
+  - 有 CLI 入口。
+  - 有配置模板，真实模型路径不入库。
+  - 有最小单测。
+- Verify：
+  - `cd project/backend && python -m pytest -v` 通过，7 passed
+  - `PYTHONPATH=src python -m smpl_service --help` 通过
 
-## 待确认问题
+### S-030 [DONE] Mock Pipeline：输入 -> backend -> manifest
 
-- 实习项目的准确目标是什么？
-- 项目最终需要交付文档、代码、演示系统，还是研究报告？
-- 是否需要前端页面？
-- 是否需要后端 API？
-- 是否需要数据库、文件存储、模型服务或第三方接口？
-- 目标用户是谁？
-- 最终验收标准是什么？
+- Started: 2026-06-05
+- Done: 2026-06-05
+- DoD：
+  - mock/synthetic 输入可跑完整流程。
+  - 输出 `manifest.json`，包含 task_id、model_type、status、output_paths、errors。
+  - Runbook 写明运行命令和成功标志。
+- Verify：
+  - `PYTHONPATH=project/backend/src python -m smpl_service run --source-type mock --input-path data/samples/mock/sample_001.json --model-type mock --output-dir outputs` 通过
+  - 生成 `outputs/job_sample_001/manifest.json`
+  - 生成 `outputs/job_sample_001/body.obj`
+
+### S-040 [TODO] SMPL/SMPL-X backend 接入验证
+
+- Started: -
+- Done: -
+- DoD：
+  - 明确使用的模型包和模型文件放置方式。
+  - 真实模型资源可用时生成 mesh/params。
+  - 资源不可用时，文档记录阻塞和 mock backend 兜底。
+
+### S-050 [TODO] DatasetInputAdapter 设计与最小样本接入
+
+- Started: -
+- Done: -
+- DoD：
+  - THuman2.0 申请/下载状态记录在 Journal 和风险文档。
+  - 若数据不可得，使用可公开样本或 synthetic 样本完成 adapter 流程。
+  - 数据不提交入 Git。
+
+### S-060 [TODO] 最小 API/CLI 契约固化
+
+- Started: -
+- Done: -
+- DoD：
+  - CLI 或 HTTP API 契约稳定。
+  - 输出 manifest 可作为后续主业务系统读取入口。
+  - HLD/LLD/Runbook 同步更新。
+
+### S-070 [DONE] 前端 3D Viewer MVP
+
+- Started: 2026-06-05
+- Done: 2026-06-05
+- DoD：
+  - 有可启动的最小前端页面。
+  - 能加载默认样例 mesh 或后端输出 mesh。
+  - 支持旋转、缩放、平移。
+  - 能显示 manifest 核心字段。
+  - Runbook 写明启动命令和成功标志。
+- Verify：
+  - `cd project/frontend && npm run build` 通过
+  - Vite build 输出 `dist/index.html` 和 JS/CSS 产物
+
+### S-080 [DONE] Sample Human Mesh Viewer
+
+- Started: 2026-06-05
+- Done: 2026-06-05
+- DoD：
+  - Viewer 默认加载更像人体的 sample-human proxy mesh。
+  - 文档说明该 mesh 是展示 proxy，不是 SMPL 真实输出。
+  - 前端 sample 有可执行验证命令。
+- Verify：
+  - `cd project/frontend && npm test` 通过，`sample-human verified: 48 vertices, 72 faces`
+  - `cd project/frontend && npm run build` 通过
+
+### S-090 [DONE] Model Module Skeleton & Environment Check
+
+- Started: 2026-06-05
+- Done: 2026-06-05
+- DoD：
+  - `project/model` 作为独立模型能力模块创建。
+  - 模型文件目录规范为 `models/smpl` 和 `models/smplx`，并不入 Git。
+  - 提供 `check-env` 命令检查依赖和模型目录。
+  - Runbook 和 LLD 同步记录当前缺失项。
+- Verify：
+  - `cd project/model && python -m pytest -v` 通过，3 passed
+  - `PYTHONPATH=src python -m smpl_model check-env --project-root /home/yfn/polyu-internship-project` 通过
+  - 当前结果：`torch=present`，`smplx=missing`，`trimesh=missing`，`models/smpl=missing`，`models/smplx=missing`
+
+## 4) Backlog（非顺序）
+
+- `[TODO]` FastAPI 服务化：`POST /v1/modeling/jobs`。
+- `[TODO]` 产品级渲染：更好的灯光、材质、阴影、纹理。
+- `[TODO]` Mesh 截图导出。
+- `[TODO]` 基础体态指标：身高、关节位置、围度占位接口。
+- `[TODO]` 体态测量 overlay 和前后/左右/历史对比。
+- `[TODO]` 医疗报告预览。
+- `[TODO]` 医院扫描仪 `ScannerInputAdapter` 草案。
+- `[TODO]` 数据安全：脱敏、审计、文件权限。
+- `[TODO]` Docker 环境。
+- `[TODO]` 将 Viewer 从静态 sample-human 切换为读取后端最新 manifest。
+- `[TODO]` 安装 `smplx` / `trimesh` 并获取 SMPL/SMPL-X 模型文件。
+- `[TODO]` 实现 `SMPLXBackend` 默认参数生成真实人体 `.obj`。
+
+## 5) 当前关键决策
+
+- DEC-20260605-001：项目定位为医疗体态系统的独立 SMPL 人体建模服务。
+- DEC-20260605-002：第一周目标不是纯 mock，而是尽量推进到 SMPL/SMPL-X pipeline。
+- DEC-20260605-003：不从零训练 SMPL，使用已有模型和开源实现。
+- DEC-20260605-004：THuman2.0 优先，mock/synthetic 兜底，CAPE/FAUST 后续参考。
+- DEC-20260605-005：文档采用 quant_platform 风格：PRD/HLD/LLD/Runbook/Journal/Tracker 分层。
+- DEC-20260605-006：第一周增加最小前端 3D Viewer，商业级真实渲染作为后续产品化方向。

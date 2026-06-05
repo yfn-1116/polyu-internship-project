@@ -1,0 +1,6 @@
+{
+  "subject_id": "sample_001",
+  "height_cm": 170,
+  "weight_kg": 65,
+  "note": "Synthetic mock subject for pipeline smoke test."
+}

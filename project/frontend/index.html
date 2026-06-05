@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SMPL Viewer MVP</title>
+  </head>
+  <body>
+    <main class="app">
+      <aside class="panel">
+        <h1>SMPL Viewer</h1>
+        <dl>
+          <dt>Status</dt>
+          <dd id="status">Loading</dd>
+          <dt>Task</dt>
+          <dd id="task-id">-</dd>
+          <dt>Model</dt>
+          <dd id="model-type">-</dd>
+          <dt>Mesh</dt>
+          <dd id="mesh-path">-</dd>
+        </dl>
+      </aside>
+      <section id="viewer" class="viewer"></section>
+    </main>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

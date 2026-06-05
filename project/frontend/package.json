@@ -1,0 +1,12 @@
+{
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "test": "node scripts/verify-samples.mjs"
+  },
+  "dependencies": {
+    "three": "^0.164.0",
+    "vite": "^5.0.0"
+  },
+  "devDependencies": {}
+}

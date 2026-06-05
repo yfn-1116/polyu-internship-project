@@ -1,0 +1,14 @@
+{
+  "task_id": "job_sample_001",
+  "body_input_source": "mock",
+  "result": {
+    "task_id": "job_sample_001",
+    "model_type": "mock",
+    "status": "success",
+    "output_paths": {
+      "mesh": "/sample/body.obj",
+      "manifest": "/sample/manifest.json"
+    },
+    "errors": []
+  }
+}

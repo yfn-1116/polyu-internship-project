@@ -8,10 +8,14 @@ Thumbs.db
 .env
 .env.*
 *.log
+.superpowers/
+outputs/
+models/
 
 # Python
 __pycache__/
 .pytest_cache/
+*.egg-info/
 .venv/
 venv/
 
@@ -19,4 +23,3 @@ venv/
 node_modules/
 dist/
 build/
-

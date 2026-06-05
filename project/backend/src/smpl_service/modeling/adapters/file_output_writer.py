@@ -1,0 +1,32 @@
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+from smpl_service.modeling.domain.contracts import Manifest
+from smpl_service.modeling.ports.model_port import MeshData
+
+
+class FileOutputWriter:
+    def write(self, mesh: MeshData, manifest: Manifest, task_dir: Path) -> Path:
+        task_dir.mkdir(parents=True, exist_ok=True)
+        mesh_path = task_dir / "body.obj"
+        manifest_path = task_dir / "manifest.json"
+
+        self._write_obj(mesh, mesh_path)
+        self._write_manifest(manifest, manifest_path)
+        return manifest_path
+
+    def _write_obj(self, mesh: MeshData, output_path: Path) -> None:
+        lines = ["# mock body mesh"]
+        for vertex in mesh.vertices:
+            lines.append(f"v {vertex[0]} {vertex[1]} {vertex[2]}")
+        for face in mesh.faces:
+            lines.append(f"f {face[0]} {face[1]} {face[2]}")
+        output_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+    def _write_manifest(self, manifest: Manifest, output_path: Path) -> None:
+        output_path.write_text(
+            json.dumps(manifest.to_dict(), indent=2, ensure_ascii=False) + "\n",
+            encoding="utf-8",
+        )

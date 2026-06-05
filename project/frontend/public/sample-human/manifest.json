@@ -1,0 +1,14 @@
+{
+  "task_id": "job_sample_human_001",
+  "body_input_source": "proxy",
+  "result": {
+    "task_id": "job_sample_human_001",
+    "model_type": "proxy-human",
+    "status": "success",
+    "output_paths": {
+      "mesh": "/sample-human/body.obj",
+      "manifest": "/sample-human/manifest.json"
+    },
+    "errors": []
+  }
+}
