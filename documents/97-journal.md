@@ -20,10 +20,11 @@
 
 - `[DONE]` M0：文档体系建立并统一风格。
 - `[DONE]` M1：工程骨架与 mock pipeline。
-- `[TODO]` M2：SMPL/SMPL-X backend 接入。
-- `[TODO]` M3：公开数据样本 adapter。
+- `[DONE]` M2：SMPL/SMPL-X backend 接入。
+- `[DONE]` M3：公开数据样本 adapter。
 - `[DONE]` M4：最小 3D Viewer 前端展示。
-- `[TODO]` M5：最小服务接口和交接文档。
+- `[DONE]` M5：MoCap 动画导出与前端动画播放。
+- `[TODO]` M6：最小服务接口和交接文档。
 
 ## Week 1（2026-06-05 ~ 2026-06-11）
 
@@ -36,11 +37,52 @@
 - `[DONE]` 文档体系收敛为 PRD/HLD/LLD/Runbook/Journal。
 - `[DONE]` 搭建 Python 工程骨架。
 - `[DONE]` 跑通 mock/synthetic pipeline。
-- `[TODO]` 尝试接入 SMPL/SMPL-X backend。
-- `[TODO]` 明确 THuman2.0 获取状态和兜底样本。
+- `[DONE]` 尝试接入 SMPL/SMPL-X backend。
+- `[DONE]` 明确 THuman2.0 获取状态和兜底样本。
 - `[DONE]` 做一个最小 3D Viewer，用于展示 mesh 或样例模型。
+- `[DONE]` MoCap 动画导出：AMASS 数据驱动 SMPL-X 生成动画序列，前端播放。
 
 ### Daily Log
+
+#### 2026-06-08（周日）
+
+- MoCap 数据准备：分析 ElenaKyriakou AMASS 数据集（13 种情绪 × 2 版本，SMPL+H 格式，52 关节 156 维，120fps）。
+- Decision：ElenaKyriakou 数据为 SMPL+H 格式，映射到 SMPL-X 时 jaw 和 eyes 填零，body 和 hands 直接映射。
+- Decision：全帧动画使用 `.bin` 二进制格式（faces.obj + vertices.bin + animation_meta.json），关键帧模式额外导出逐帧 .obj。
+- Docs Phase 0：更新 17 个文档（知识库、LLD M0-M5、HLD、PRD、风险、FAQ、Tracker、README）。
+- Decision：新增 RISK-005（关节映射可能不完全正确）和 RISK-006（全帧数据量大，支持降采样）。
+- Dependencies：安装 smplx 0.1.28 和 trimesh 4.12.2；更新 `project/model/pyproject.toml` 添加运行时依赖。
+- Model：新增 `export-mocap-smplx` 命令，支持 all/keyframes/frames 帧选择模式和 target_fps 降采样。
+- Model：新增 `AnimationExportResult` dataclass 承载动画元数据。
+- Validation：`cd project/model && PYTHONPATH=src python -m pytest -v` 通过，19 passed。
+- Validation：keyframes 模式导出 Happy_v1，5 帧，10475 vertices，20908 faces。
+- Validation：all 模式 30fps 降采样导出 646 帧，vertices.bin 78MB。
+- Backend：新增 `MoCapNpzInputAdapter`（source_type=mocap-npz），加载 AMASS NPZ 文件。
+- Backend：新增 `SMPLXMoCapBackend`（model_type=smplx），SMPL+H→SMPL-X 映射 + 批量 forward pass。
+- Backend：扩展 `MeshData` 增加 `animation_data` 字段，`FileOutputWriter` 支持输出 vertices.bin + faces.obj。
+- Backend：扩展 `ModelResult` 增加 `animation` 字段承载动画元数据。
+- Backend：pipeline 新增 `mocap-npz` + `smplx` 路由。
+- Validation：`cd project/backend && python -m pytest -v` 通过，16 passed。
+- Validation：端到端 pipeline 测试通过，输出 faces.obj + vertices.bin + animation_meta.json + manifest.json。
+- Frontend：批量导出 4 种情绪 MoCap 动画（Happy/Angry/Sad/Neutral，30fps）。
+- Frontend：新增 `prepare-mocap-samples.mjs` 脚本，从 outputs 复制动画数据到 public。
+- Frontend：Viewer v3 新增 MoCap Animation 区域，支持情绪切换（Happy/Angry/Sad/Neutral）。
+- Frontend：新增 AnimationPlayer 类，逐帧更新 BufferGeometry position attribute 实现动画播放。
+- Frontend：播放控制包含 Play/Pause、进度条 seek、速度选择（0.5x/1x/2x）。
+- Frontend：MoCap 按钮使用绿色高亮区分于静态模型按钮。
+- Validation：`npm run prepare:samples && npm test` 通过，9 个样例（5 静态 + 4 动画）。
+- Validation：`npm run build` 通过，Vite build 成功。
+- Docs：新增 `documents/02-design/08-lld-multimodal-input.md`，定义多源数据处理 3 层架构。
+- Backend：新增 `domain/observations.py`，定义 BodyObservation / BodySequenceObservation / ScanObservation / SMPLXParamInput 4 种统一观测类型。
+- Backend：新增 5 个 InputAdapter（image/video/scan/smplx-param/measurement），实现文件校验 + Observation 生成。
+- Backend：ImageInputAdapter 支持 OpenCV 读取真实图片尺寸（若 OpenCV 可用）。
+- Backend：VideoInputAdapter 支持 OpenCV 读取真实 fps/frame_count（若 OpenCV 可用）。
+- Backend：ScanInputAdapter 支持 trimesh 读取真实顶点/面片数（若 trimesh 可用）。
+- Backend：SMPLXParamInputAdapter 支持加载真实 AMASS NPZ 文件并提取参数。
+- Model：新增 `app/fitting/smplx_fitting_backend.py`，定义 4 条 Fitting 路线 stub（SMPLify-X / HMR / scan fitting / passthrough）。
+- Scripts：新增 `project/scripts/demo_all_inputs.py`，支持 --type image|video|scan|smplx-param|measurement。
+- Validation：demo 脚本输出正确 JSON；已有测试全部通过（16 backend + 19 model）。
+- Decision：当前阶段只搭架构骨架，YOLO/HMR/SMPLify-X 全部 stub + TODO，不下载模型权重。
 
 #### 2026-06-05（周五）
 

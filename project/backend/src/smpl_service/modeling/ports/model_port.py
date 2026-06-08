@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Protocol
+from typing import Any, Protocol
 
 from smpl_service.modeling.domain.contracts import BodyInput
 
@@ -12,6 +12,7 @@ class MeshData:
     vertices: list[tuple[float, float, float]]
     faces: list[tuple[int, int, int]]
     source_obj_path: Path | None = None
+    animation_data: dict[str, Any] | None = None
 
 
 class ModelBackend(Protocol):

@@ -45,3 +45,31 @@ for (const [sampleName, minVertices, minFaces] of requiredSamples) {
 
   console.log(`${sampleName} verified: ${vertexCount} vertices, ${faceCount} faces`);
 }
+
+const mocapSamples = ['sample-mocap-happy', 'sample-mocap-angry', 'sample-mocap-sad', 'sample-mocap-neutral'];
+
+for (const sampleName of mocapSamples) {
+  const manifestPath = path.join(root, 'public', sampleName, 'manifest.json');
+
+  if (!fs.existsSync(manifestPath)) {
+    throw new Error(`missing MoCap manifest: ${manifestPath}`);
+  }
+
+  const facesObjPath = path.join(root, 'public', sampleName, 'faces.obj');
+  const verticesBinPath = path.join(root, 'public', sampleName, 'vertices.bin');
+  const metaPath = path.join(root, 'public', sampleName, 'animation_meta.json');
+
+  if (!fs.existsSync(facesObjPath)) throw new Error(`missing ${sampleName}/faces.obj`);
+  if (!fs.existsSync(verticesBinPath)) throw new Error(`missing ${sampleName}/vertices.bin`);
+  if (!fs.existsSync(metaPath)) throw new Error(`missing ${sampleName}/animation_meta.json`);
+
+  const meta = JSON.parse(fs.readFileSync(metaPath, 'utf8'));
+  const binSize = fs.statSync(verticesBinPath).size;
+  const expectedSize = meta.frame_count * meta.vertices_count * 3 * 4;
+
+  if (binSize !== expectedSize) {
+    throw new Error(`${sampleName}: vertices.bin size mismatch: ${binSize} != ${expectedSize}`);
+  }
+
+  console.log(`${sampleName} verified: ${meta.frame_count} frames, ${meta.duration_seconds}s, ${meta.emotion}`);
+}

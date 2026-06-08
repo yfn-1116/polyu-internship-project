@@ -3,32 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SMPL Viewer MVP</title>
+    <title>SMPL Viewer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   </head>
   <body>
-    <main class="app">
-      <aside class="panel">
-        <h1>SMPL Viewer</h1>
-        <div class="toolbar" aria-label="View mode">
-          <button class="mode-button active" type="button" data-sample="thuman">THuman Scan</button>
-          <button class="mode-button" type="button" data-sample="smplxDefault">SMPL-X Default</button>
-          <button class="mode-button" type="button" data-sample="smplxSlim">SMPL-X Slim</button>
-          <button class="mode-button" type="button" data-sample="smplxBroad">SMPL-X Broad</button>
-          <button class="mode-button" type="button" data-sample="smplxTall">SMPL-X Tall</button>
-        </div>
-        <dl>
-          <dt>Status</dt>
-          <dd id="status">Loading</dd>
-          <dt>Task</dt>
-          <dd id="task-id">-</dd>
-          <dt>Model</dt>
-          <dd id="model-type">-</dd>
-          <dt>Mesh</dt>
-          <dd id="mesh-path">-</dd>
-        </dl>
-      </aside>
-      <section id="viewer" class="viewer"></section>
-    </main>
+    <div id="app"></div>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

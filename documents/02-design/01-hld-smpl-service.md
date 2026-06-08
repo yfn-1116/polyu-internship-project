@@ -30,14 +30,17 @@ CLI / HTTP API
   -> InputAdapter
        - MockInputAdapter
        - DatasetInputAdapter
+       - MoCapNpzInputAdapter (AMASS MoCap data)
        - ScannerInputAdapter (future)
   -> ModelBackend
        - MockBackend
+       - PassthroughModelBackend
        - SMPLBackend -> project/model
        - SMPLXBackend -> project/model
+       - SMPLXMoCapBackend -> project/model (MoCap driven animation)
   -> OutputWriter
   -> manifest.json
-  -> 3D Viewer (MVP frontend)
+  -> 3D Viewer (MVP frontend + animation player)
 ```
 
 ## 2) 模块边界

@@ -149,6 +149,21 @@ MVP 目标：一周内跑通“输入样本 -> SMPL/SMPL-X 或可替换 backend 
   - `cd project/frontend && npm run prepare:thuman && npm test && npm run build` 通过
   - 当前前端样例：`sample-thuman verified: 289106 vertices, 500000 faces`
 
+### S-040b [DONE] MoCap 动画导出（model 模块）
+
+- Started: 2026-06-08
+- Done: 2026-06-08
+- DoD：
+  - 安装 smplx、trimesh 依赖。
+  - `project/model` 新增 `export-mocap-smplx` 命令。
+  - 支持 SMPL+H → SMPL-X 关节映射。
+  - 支持 all / keyframes / frames 帧选择模式和 target_fps 降采样。
+  - 输出 faces.obj + vertices.bin + animation_meta.json + manifest.json。
+  - LLD M5、Runbook 同步更新。
+- Verify：
+  - `cd project/model && PYTHONPATH=src python -m pytest -v` 全部通过
+  - `PYTHONPATH=src python -m smpl_model export-mocap-smplx --project-root /home/yfn/polyu-internship-project --input-path <npz> --output-dir outputs/mocap_happy_v1 --frame-mode keyframes` 生成正确输出
+
 ### S-060 [TODO] 最小 API/CLI 契约固化
 
 - Started: -
@@ -157,6 +172,20 @@ MVP 目标：一周内跑通“输入样本 -> SMPL/SMPL-X 或可替换 backend 
   - CLI 或 HTTP API 契约稳定。
   - 输出 manifest 可作为后续主业务系统读取入口。
   - HLD/LLD/Runbook 同步更新。
+
+### S-050b [DONE] MoCap NPZ Pipeline 集成（backend）
+
+- Started: 2026-06-08
+- Done: 2026-06-08
+- DoD：
+  - 新增 MoCapNpzInputAdapter（source_type=mocap-npz）。
+  - 新增 SMPLXMoCapBackend（model_type=smplx）。
+  - pipeline 支持 mocap-npz + smplx 路由。
+  - manifest 包含动画元数据。
+  - LLD M1、M2、Runbook 同步更新。
+- Verify：
+  - `cd project/backend && PYTHONPATH=src python -m pytest -v` 全部通过
+  - `PYTHONPATH=src python -m smpl_service run --source-type mocap-npz --input-path <npz> --model-type smplx --output-dir outputs` 生成正确输出
 
 ### S-070 [DONE] 前端 3D Viewer MVP
 
@@ -199,6 +228,20 @@ MVP 目标：一周内跑通“输入样本 -> SMPL/SMPL-X 或可替换 backend 
   - 当前结果：`sample-thuman=289106/500000`，`sample-smplx-default|slim|broad|tall=10475/20908`
   - `cd project/frontend && npm run build` 通过
 
+### S-086 [DONE] 前端 Viewer 动画播放
+
+- Started: 2026-06-08
+- Done: 2026-06-08
+- DoD：
+  - 新增 `prepare:mocap` 脚本，从 outputs 复制动画数据到 frontend public。
+  - Viewer 新增 MoCap 情绪按钮组和播放控制（play/pause、seek、speed）。
+  - AnimationPlayer 逐帧更新 BufferGeometry position attribute。
+  - 按需加载动画数据，不预加载全部情绪。
+  - LLD M4、Runbook 同步更新。
+- Verify：
+  - `cd project/frontend && npm run prepare:mocap && npm test && npm run build` 通过
+  - `npm run dev` 后浏览器可切换情绪并播放动画
+
 ### S-090 [DONE] Model Module Skeleton & Environment Check
 
 - Started: 2026-06-05
@@ -225,6 +268,13 @@ MVP 目标：一周内跑通“输入样本 -> SMPL/SMPL-X 或可替换 backend 
 - Verify：
   - `git diff --check` 通过
   - `git status --ignored --short` 显示 `models/`、`data/datasets/`、`outputs/` 仍为 ignored
+
+### S-100 [DONE] 多源数据处理模块
+
+- Started: 2026-06-08
+- Done: 2026-06-08
+- DoD：设计文档 + 4 种 Observation + 5 个 Adapter + Fitting stub + demo 脚本。
+- Verify：已有测试保持 35 passed，demo 脚本输出正确 JSON。
 
 ## 4) Backlog（非顺序）
 

@@ -11,7 +11,7 @@ def build_parser() -> argparse.ArgumentParser:
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     run_parser = subparsers.add_parser("run", help="run a modeling task")
-    run_parser.add_argument("--source-type", required=True, choices=["mock", "dataset-obj", "scanner"])
+    run_parser.add_argument("--source-type", required=True, choices=["mock", "dataset-obj", "scanner", "mocap-npz"])
     run_parser.add_argument("--input-path", required=True)
     run_parser.add_argument("--model-type", required=True, choices=["mock", "passthrough", "smpl", "smplx"])
     run_parser.add_argument("--output-dir", default="outputs")

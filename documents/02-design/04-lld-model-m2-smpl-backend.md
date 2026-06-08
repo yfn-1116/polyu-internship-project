@@ -9,8 +9,10 @@ ModelBackend 负责把标准 `BodyInput` 转换为人体模型输出。它不关
 | Backend | 用途 | 第一周策略 |
 | --- | --- | --- |
 | MockBackend | 保证 pipeline 不被模型资源卡死 | 必须实现 |
+| PassthroughModelBackend | 直接透传已有 OBJ 文件 | 已完成 |
 | SMPLBackend | 输出 SMPL mesh/params | 资源可用则实现 |
 | SMPLXBackend | 输出 SMPL-X mesh/params | 资源可用则实现 |
+| SMPLXMoCapBackend | 用 MoCap 参数驱动 SMPL-X 生成动画序列 | MoCap 数据可用则实现 |
 
 ## 2) 接口
 
@@ -25,6 +27,20 @@ run(body_input, options) -> ModelResult
 3. 加载模型资源或 mock 参数。
 4. 生成 mesh/params/joints。
 5. 返回 ModelResult。
+
+### 3.1) SMPLXMoCapBackend 流程
+
+1. 从 BodyInput.metadata 提取 poses (N, 156)、betas (16,)、trans (N, 3)、gender。
+2. 执行 SMPL+H → SMPL-X 关节映射（poses 156 维 → body_pose 165 维）。
+3. 调用 `project/model` 的 `export_mocap_smplx()` 核心逻辑。
+4. SMPL-X forward pass 生成 vertices 序列。
+5. 导出 faces.obj + vertices.bin + animation_meta.json。
+6. 返回包含动画元数据的 ModelResult。
+
+SMPLXMoCapBackend 支持帧选择：
+- `frame_mode=all`：导出全部帧（或按 target_fps 降采样）。
+- `frame_mode=keyframes`：导出代表性帧。
+- `frame_mode=frames`：导出指定帧号。
 
 ## 4) Failure Modes
 

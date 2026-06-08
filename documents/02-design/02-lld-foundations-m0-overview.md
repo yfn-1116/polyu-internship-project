@@ -10,7 +10,7 @@
 
 ```text
 BodyInput
-- source_type: mock | dataset | scanner
+- source_type: mock | dataset | mocap-npz | scanner
 - subject_id: string
 - input_files: list[string]
 - metadata: dict
@@ -59,6 +59,10 @@ project/backend/
 │       ├── adapters/
 │       │   ├── mock_input_adapter.py
 │       │   ├── mock_model_backend.py
+│       │   ├── dataset_obj_input_adapter.py
+│       │   ├── passthrough_model_backend.py
+│       │   ├── mocap_npz_input_adapter.py
+│       │   ├── smplx_mocap_backend.py
 │       │   └── file_output_writer.py
 │       ├── app/
 │       │   └── pipeline.py
@@ -77,6 +81,8 @@ project/backend/
 | `modeling/adapters/mock_input_adapter.py` | mock 输入适配器 | 不调用模型 |
 | `modeling/adapters/mock_model_backend.py` | mock 模型后端 | 不读取原始数据源 |
 | `modeling/adapters/file_output_writer.py` | 写 `.obj` 和 `manifest.json` | 不编排任务 |
+| `modeling/adapters/mocap_npz_input_adapter.py` | 加载 AMASS MoCap NPZ 数据 | 不调用模型 |
+| `modeling/adapters/smplx_mocap_backend.py` | 用 MoCap 参数驱动 SMPL-X 生成动画 | 不编排任务 |
 | `modeling/app/pipeline.py` | 编排一次建模任务 | 不直接解析原始输入或写 OBJ 细节 |
 | `modeling/entrypoints/cli.py` | CLI 参数解析和命令入口 | 不写模型逻辑 |
 | `tests/` | 单测和 smoke 测试 | 测行为，不测实现细节 |

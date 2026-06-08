@@ -14,6 +14,11 @@ class FileOutputWriter:
         mesh_path = task_dir / "body.obj"
         manifest_path = task_dir / "manifest.json"
 
+        if mesh.animation_data is not None:
+            self._write_animation(mesh, task_dir)
+            self._write_manifest(manifest, manifest_path)
+            return manifest_path
+
         self._write_obj(mesh, mesh_path)
         self._write_manifest(manifest, manifest_path)
         return manifest_path
@@ -37,5 +42,15 @@ class FileOutputWriter:
     def _write_manifest(self, manifest: Manifest, output_path: Path) -> None:
         output_path.write_text(
             json.dumps(manifest.to_dict(), indent=2, ensure_ascii=False) + "\n",
+            encoding="utf-8",
+        )
+
+    def _write_animation(self, mesh: MeshData, task_dir: Path) -> None:
+        anim = mesh.animation_data
+        (task_dir / "faces.obj").write_text(anim["faces_obj"], encoding="utf-8")
+        (task_dir / "vertices.bin").write_bytes(anim["vertices_bin"])
+        meta_path = task_dir / "animation_meta.json"
+        meta_path.write_text(
+            json.dumps(anim["animation_meta"], indent=2, ensure_ascii=False) + "\n",
             encoding="utf-8",
         )

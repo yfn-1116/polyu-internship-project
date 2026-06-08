@@ -16,10 +16,31 @@ python -m smpl_service run \
   --output-dir outputs
 ```
 
+MoCap 动画驱动：
+
+```bash
+# 模型模块直接导出
+cd project/model
+PYTHONPATH=src python -m smpl_model export-mocap-smplx \
+  --project-root /home/yfn/polyu-internship-project \
+  --input-path <path>/Elena_Happy_v1_C3D_poses.npz \
+  --output-dir outputs/mocap_happy_v1 \
+  --frame-mode all --target-fps 30
+
+# 后端 pipeline 集成
+cd project/backend
+PYTHONPATH=src python -m smpl_service run \
+  --source-type mocap-npz \
+  --input-path <path>/Elena_Happy_v1_C3D_poses.npz \
+  --model-type smplx \
+  --output-dir outputs
+```
+
 成功标志：
 
 - 命令退出码为 0。
 - 输出 `outputs/<task_id>/manifest.json`。
+- MoCap 模式额外输出 `vertices.bin`、`faces.obj`、`animation_meta.json`。
 
 ## 2) HTTP API 候选契约
 

@@ -22,6 +22,7 @@ class ModelResult:
     status: str
     output_paths: dict[str, str] = field(default_factory=dict)
     errors: list[str] = field(default_factory=list)
+    animation: dict[str, object] | None = None
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)

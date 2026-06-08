@@ -4,10 +4,10 @@
 
 ## 当前目标
 
-当前阶段支持模型环境检查，并可以导出一个默认 neutral SMPL-X 人体 `.obj`。
+当前阶段支持模型环境检查、默认 SMPL-X 人体 mesh 导出和 MoCap 动作捕捉驱动的 SMPL-X 动画 mesh 序列导出。
 
 ```text
-check Python deps -> check local model dirs -> export default SMPL-X mesh
+check Python deps -> check local model dirs -> export default SMPL-X mesh -> export MoCap animation
 ```
 
 ## 目录职责
@@ -72,9 +72,25 @@ PYTHONPATH=src python -m smpl_model export-default-smplx \
 - 生成 `outputs/smplx_default_neutral/manifest.json`
 - manifest 中 `vertices_count=10475`，`faces_count=20908`
 
-## 后续扩展
+## 导出 MoCap 动画序列
 
-- `SMPLBackend`：加载 SMPL 模型，输出 mesh。
-- `SMPLXBackend`：已能导出默认人体 mesh，后续接入可变 shape/pose 参数。
-- `examples/`：保存 shape/pose 示例参数。
-- 后端通过稳定接口调用模型模块，不直接处理模型权重细节。
+从 AMASS SMPL+H 动作捕捉数据驱动 SMPL-X 生成动画 mesh 序列：
+
+```bash
+cd /home/yfn/polyu-internship-project/project/model
+PYTHONPATH=src python -m smpl_model export-mocap-smplx \
+  --project-root /home/yfn/polyu-internship-project \
+  --input-path <path>/Elena_Happy_v1_C3D_poses.npz \
+  --output-dir outputs/mocap_happy_v1 \
+  --frame-mode keyframes
+```
+
+成功标志：
+
+- 生成 `outputs/mocap_happy_v1/mocap_Happy_v1/frame_0000.obj` 等 5 个关键帧
+- 生成 `vertices.bin`、`faces.obj`、`animation_meta.json`、`manifest.json`
+- manifest 中 `vertices_count=10475`，`faces_count=20908`
+
+支持 `--frame-mode all --target-fps 30` 导出全帧降采样序列。支持 `--input-dir` 批量导出整个目录。
+
+SMPL+H (52 关节) → SMPL-X (55 关节) 映射：body 和 hands 参数直接映射，jaw 和 eyes 填零。详见 `documents/99-knowledge-base/02-dataset-notes.md`。

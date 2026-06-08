@@ -109,6 +109,83 @@ data/datasets/
 
 数据集文件不提交 Git。只提交小型 mock/sample、文档和必要的 manifest 模板。
 
+## AMASS / ElenaKyriakou 动作捕捉数据
+
+AMASS（Archive of Motion Capture as Surface Shapes）将多个公开 MoCap 数据库统一到 SMPL 参数化人体格式。本项目当前使用其中的 ElenaKyriakou 子集。
+
+### 数据来源
+
+- 原始来源：CMU MoCap 数据库，通过 AMASS 项目标准化为 SMPL+H 格式。
+- 受试者：Elena Kyriakou，女性。
+- 原始位置：`/mnt/e/01大二下文件夹/香港理工大学实习项目文件/20151003_ElenaKyriakou/20151003_ElenaKyriakou/`（Windows E 盘）。
+- 项目内位置：`data/datasets/raw/amass/ElenaKyriakou/`（不提交 Git）。
+- 项目内放置约定：复制到 `data/datasets/raw/amass/ElenaKyriakou/`（不提交 Git）。
+
+### 文件结构
+
+```text
+20151003_ElenaKyriakou/
+├── shape.npz                          # 体型参数（betas 16维, gender female）
+├── Elena_Happy_v1_C3D_poses.npz       # 24 个动作捕捉文件
+├── Elena_Happy_v2_C3D_poses.npz       # 13 种情绪 × 2 版本
+├── Elena_Angry_v1_C3D_poses.npz       # （Neutral 和 Sad 只有 v2）
+├── ...
+└── Elena_Tired_v2_C3D_poses.npz
+```
+
+### 数据字段
+
+| 字段 | 维度 | 含义 |
+| --- | --- | --- |
+| `poses` | (帧数, 156) | 52 关节 × 3 轴旋转（axis-angle） |
+| `betas` | (16,) | SMPL 体型参数，所有文件相同 |
+| `dmpls` | (帧数, 8) | 动态变形参数（肌肉/软组织抖动） |
+| `trans` | (帧数, 3) | 全局位移 (x, y, z) |
+| `gender` | scalar | `female` |
+| `mocap_framerate` | scalar | 120 fps |
+
+### SMPL+H 与 SMPL-X 关节差异
+
+ElenaKyriakou 数据是 SMPL+H 格式（52 关节 = 156 维），SMPL-X 模型使用 55 关节：
+
+```text
+SMPL+H (52 joints):
+  [root(1) | body(21) | left_hand(15) | right_hand(15)]
+
+SMPL-X (55 joints):
+  [body(21) | jaw(1) | eyes(2) | left_hand(15) | right_hand(15)]
+```
+
+映射方式：
+
+```text
+global_orient = poses[:, :3]            # root orientation
+body_pose = concat(
+  poses[:, 3:66],                       # body joints 1-21
+  zeros(N, 9),                          # jaw(3) + eyes(6) 填零
+  poses[:, 66:156],                     # hands (30 joints)
+)
+```
+
+betas (16 维) 直接使用；dmpls (8 维) 在 SMPL-X 中不适用，跳过。
+
+### 情绪分类（Russell 环状模型）
+
+```text
+高唤醒 + 正效价：Excited, Happy, Pleased
+高唤醒 + 负效价：Afraid, Angry, Annoyed
+低唤醒 + 正效价：Relaxed, Satisfied
+低唤醒 + 负效价：Bored, Tired, Sad, Miserable
+中性基准：       Neutral
+```
+
+### 统计
+
+- 总片段数：24（13 种情绪，大多数有 v1 + v2）
+- 总帧数：67541
+- 总时长：约 563 秒（9.4 分钟）
+- 单情绪帧数范围：2232 ~ 3943 帧（18.6 ~ 32.9 秒）
+
 ## 关联文档
 
 - `documents/02-design/03-lld-data-m1-input-adapters.md`

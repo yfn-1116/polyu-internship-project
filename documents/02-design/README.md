@@ -12,6 +12,7 @@
 
 - `*-hld-*.md`：高层设计。
 - `*-lld-*.md`：低层设计。
+- `08-lld-multimodal-input.md`：多源数据处理模块（图片/视频/scan/参数/尺寸 → 统一 Observation → Fitting → SMPL-X）。
 - 文件编号表达阅读顺序，一个文件聚焦一个模块或问题域。
 
 ## 当前文档索引
@@ -28,6 +29,7 @@
 - `05-lld-edge-m3-api-and-cli.md`
 - `06-lld-frontend-m4-3d-viewer.md`
 - `07-lld-model-m5-smpl-module.md`
+- `08-lld-multimodal-input.md`
 
 ## LLD 推荐结构
 

@@ -53,7 +53,11 @@ src/smpl_service/
 | `modeling/ports/output_port.py` | 输出写入协议 |
 | `modeling/adapters/mock_input_adapter.py` | 第一周 mock 输入 |
 | `modeling/adapters/mock_model_backend.py` | 第一周 mock 模型输出 |
-| `modeling/adapters/file_output_writer.py` | 写出 `.obj` 和 `manifest.json` |
+| `modeling/adapters/dataset_obj_input_adapter.py` | THuman OBJ 输入适配器 |
+| `modeling/adapters/passthrough_model_backend.py` | OBJ 透传模型后端 |
+| `modeling/adapters/mocap_npz_input_adapter.py` | AMASS MoCap NPZ 输入适配器 |
+| `modeling/adapters/smplx_mocap_backend.py` | SMPL-X MoCap 动画驱动后端 |
+| `modeling/adapters/file_output_writer.py` | 写出 `.obj`/`.bin` 和 `manifest.json` |
 | `modeling/app/pipeline.py` | 编排完整建模任务 |
 | `modeling/entrypoints/cli.py` | CLI 参数解析和命令入口 |
 
@@ -67,7 +71,7 @@ src/smpl_service/
 
 ## 后续扩展
 
-- 接 THuman2.0：新增 `DatasetInputAdapter`。
+- 接 THuman2.0：新增 `DatasetInputAdapter`。✅ 已完成
+- 接 AMASS MoCap：新增 `MoCapNpzInputAdapter` + `SMPLXMoCapBackend`。✅ 已完成
 - 接医院扫描仪：新增 `ScannerInputAdapter`。
-- 接真实模型：新增 `SMPLBackend` 或 `SMPLXBackend`。
 - 接主业务系统：在保持 manifest 兼容的前提下增加 API 层。

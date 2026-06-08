@@ -14,6 +14,25 @@
 - SMPL-X 样例是 beta preset 生成的演示模型，不是 THuman scan fitting 结果。
 - 加载 mesh 后自动居中和缩放模型。
 
+### 1.1) MoCap 动画播放功能
+
+- 加载 MoCap 动画序列（vertices.bin + faces.obj + animation_meta.json）。
+- AnimationPlayer 逐帧更新 BufferGeometry 的 position attribute。
+- 播放控制：play/pause toggle、进度条 seek、播放速度（0.5x / 1x / 2x）。
+- 情绪切换按钮组：左侧面板新增 MoCap 情绪选择（Happy、Angry、Sad 等）。
+- 按需加载：切换情绪时才加载对应 vertices.bin，不预加载全部情绪。
+- 使用 TypedArray 直接操作 BufferGeometry，避免逐帧重新创建 geometry。
+
+### 1.2) 动画数据加载格式
+
+```text
+public/sample-mocap-<emotion>/
+├── faces.obj              # 面片定义（OBJ 格式，只含 f 行）
+├── vertices.bin           # float32 二进制，每帧 10475×3×4 bytes
+├── animation_meta.json    # {fps, frame_count, emotion, duration}
+└── manifest.json
+```
+
 ## 2) 推荐技术
 
 - React 或 Vite 前端骨架。
@@ -28,6 +47,7 @@
 4. Three.js 加载 mesh 并展示。
 5. 用户通过鼠标旋转、缩放、平移查看人体模型。
 6. 用户可切换 THuman Scan 和多组 SMPL-X preset 样例。
+7. 用户可切换 MoCap 情绪动画，使用播放控制查看动画序列。
 
 ## 4) Failure Modes
 
