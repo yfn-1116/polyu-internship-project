@@ -1,0 +1,7 @@
+node_modules
+dist
+.git
+*.md
+!public/models/README.md
+AGENT_LOOP.md
+TASKS.md

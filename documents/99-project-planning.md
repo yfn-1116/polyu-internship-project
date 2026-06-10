@@ -25,6 +25,10 @@
 - LLD M1 输入适配：`documents/02-design/03-lld-data-m1-input-adapters.md`
 - LLD M2 模型后端：`documents/02-design/04-lld-model-m2-smpl-backend.md`
 - LLD M3 API/CLI：`documents/02-design/05-lld-edge-m3-api-and-cli.md`
+- LLD M4 前端：`documents/02-design/06-lld-frontend-m4-3d-viewer.md`
+- LLD M5 模型模块：`documents/02-design/07-lld-model-m5-smpl-module.md`
+- LLD M8 多源输入：`documents/02-design/08-lld-multimodal-input.md`
+- LLD M9 医疗数字人：`documents/02-design/09-lld-medical-digital-human.md`
 - FAQ：`documents/03-faq/README.md`
 - 风险：`documents/04-challenges/01-technical-risks.md`
 - Runbook：`documents/98-runbook/README.md`
@@ -44,6 +48,10 @@ MVP 目标：一周内跑通“输入样本 -> SMPL/SMPL-X 或可替换 backend 
 - M5 Service Interface：最小 HTTP API 或稳定 CLI 契约，输出 manifest 可被主系统读取。
 - M6 Viewer MVP：最小 3D Viewer 能展示样例或输出 mesh。
 - M7 Handoff：运行手册、风险、下一步任务完整。
+- M8 Multimodal Input：多源数据处理模块（5 种输入统一转 SMPL-X）。
+- M9 Medical Avatar Frontend：React/R3F 医疗数字人交互系统前端。
+- M10 AI Chat + RAG：千问 API 接入 + ChromaDB 医疗知识库。
+- M11 Hologram Interface：全息投影接口预留与 GLB 导出。
 
 ## 3) 执行队列（按顺序执行）
 
@@ -276,6 +284,63 @@ MVP 目标：一周内跑通“输入样本 -> SMPL/SMPL-X 或可替换 backend 
 - DoD：设计文档 + 4 种 Observation + 5 个 Adapter + Fitting stub + demo 脚本。
 - Verify：已有测试保持 35 passed，demo 脚本输出正确 JSON。
 
+### S-110 [DONE] 医疗数字人 3D 交互系统前端（React/R3F 重构）
+
+- Started: 2026-06-09
+- Done: 2026-06-09
+- Scope：
+  - `project/medical-avatar-frontend/` 全新 React 项目（28 源文件，~1800 行）
+  - 原 `project/frontend/` Vue 项目保留不动
+- DoD：
+  - Vite + React + TypeScript + Tailwind CSS + R3F + Zustand 技术栈
+  - 左侧 3D 数字人区域（Fallback 几何体数字人：白大褂+肤色+深蓝裤装）
+  - 6 种 AvatarState 动画（idle/listening/thinking/speaking/guiding/rehab）
+  - 右侧医疗信息面板（问题/回答/科室/风险/来源/免责声明 6 张卡片）
+  - 底部字幕 + 麦克风按钮 + 文字输入 + 4 个快捷问题
+  - Mock 对话流程（listening → thinking → speaking → idle）
+  - 玻璃拟态 UI + 医疗蓝白配色
+  - Vite `host: 0.0.0.0`，局域网可访问（WSL2 IP: 192.168.1.91）
+  - API 接口预留 `services/digitalHumanApi.ts`，当前 mock 后续切真实后端
+- Verify：
+  - `npm install && npm run dev` 后浏览器可访问
+  - 无 GLB 模型时自动 fallback 几何体数字人，不报错
+  - 点击快捷问题，状态流转正常，字幕和卡片更新正常
+
+### S-120 [TODO] AI 对话 + RAG 后端接入
+
+- Started: -
+- Done: -
+- Scope：
+  - `project/backend/.../entrypoints/chat_api.py` FastAPI 对话 API
+  - `project/backend/.../entrypoints/llm_client.py` 千问 API 封装
+  - `project/backend/.../entrypoints/rag_service.py` RAG 检索服务
+  - `project/backend/.../entrypoints/patient_store.py` 患者档案管理
+  - `project/backend/.../entrypoints/chat_session.py` 会话管理
+- DoD：
+  - POST `/api/chat` 接收文字对话，返回结构化 MedicalResponse
+  - LLM 通过千问 DashScope API 调用（qwen-plus）
+  - RAG 使用 ChromaDB 本地向量库 + 千问 text-embedding-v3
+  - System Prompt 设定医疗体态顾问角色
+  - RAG 知识库含疾病/导诊/用药/体检/康复/老年医学 6 类
+  - 患者档案可上传/查询，注入对话上下文
+  - 前端 `services/digitalHumanApi.ts` 可切换至真实 API
+- Prerequisites：
+  - `DASHSCOPE_API_KEY` 环境变量
+  - `pip install dashscope chromadb`
+
+### S-130 [TODO] 全息投影接口预留与 GLB 导出
+
+- Started: -
+- Done: -
+- Scope：
+  - `project/backend/.../entrypoints/hologram_api.py` 全息输出 API
+  - 前端 `services/hologramOutput.ts` 全息输出模块
+- DoD：
+  - WebSocket `/api/hologram/stream` 实时顶点推流接口定义
+  - POST `/api/hologram/export` glTF/GLB/USD 导出接口
+  - GET `/api/hologram/multiview/{n}` 多视角渲染接口
+  - MVP 阶段只做接口定义 + 文档，不实现具体全息硬件对接
+
 ## 4) Backlog（非顺序）
 
 - `[TODO]` FastAPI 服务化：`POST /v1/modeling/jobs`。
@@ -289,6 +354,13 @@ MVP 目标：一周内跑通“输入样本 -> SMPL/SMPL-X 或可替换 backend 
 - `[TODO]` Docker 环境。
 - `[TODO]` 将 Viewer 从静态 sample-human 切换为读取后端最新 manifest。
 - `[TODO]` 实现 `SMPLXBackend` 默认参数生成真实人体 `.obj`。
+- `[TODO]` 真实 GLB 数字人模型加载（替换 Fallback 几何体）。
+- `[TODO]` Web Speech API STT/TTS 语音交互接入。
+- `[TODO]` 千问 VL 多模态图片→SMPL-X 参数映射（照片重建 3D 数字人）。
+- `[TODO]` 本地 HMR/PARE ONNX 推理部署（替代千问 VL 方案）。
+- `[TODO]` 数字人口型同步（Viseme Lip Sync）。
+- `[TODO]` RAG 知识库内容完善（医疗文档向量化入库）。
+- `[TODO]` 全息投影实际硬件对接（Looking Glass / 全息风扇 / AR 眼镜）。
 
 ## 5) 当前关键决策
 
@@ -302,3 +374,8 @@ MVP 目标：一周内跑通“输入样本 -> SMPL/SMPL-X 或可替换 backend 
 - DEC-20260605-008：数据集和模型主线并行推进；第一周主线用 SMPL-X 默认人体保证可展示，支线申请/下载 THuman2.0 或 FAUST。
 - DEC-20260605-009：数据集选择采用“论文背景 + 工程可得性”双重判断；CAESAR/论文 registrations 只作为训练数据背景，主数据集选 THuman2.0/2.1，FAUST 作为真实 scan 兜底。
 - DEC-20260605-010：真实数据集按 `data/datasets/raw|interim|processed` 本地管理，不提交 Git；Blender/MeshLab 只作为旁路验证和离线渲染工具。
+- DEC-20260609-001：医疗数字人前端采用 React/R3F 重构，新建独立项目 `project/medical-avatar-frontend/`，原 Vue 前端保留不动。
+- DEC-20260609-002：LLM 采用千问 DashScope API（云端），避免 RTX 5070 12GB 同时跑 LLM + SMPL-X 推理导致显存不足；后续可切换本地 Ollama。
+- DEC-20260609-003：RAG 采用 ChromaDB 本地向量库 + 千问 text-embedding-v3，知识来源覆盖疾病/导诊/用药/体检/康复/老年医学 6 类。
+- DEC-20260609-004：全息投影接口 MVP 阶段只做接口定义（WebSocket 顶点流 / glTF 导出 / 多视角渲染），不实现具体硬件对接。
+- DEC-20260609-005：3D 渲染在访问者浏览器（WebGL）执行，服务器 GPU 只负担 SMPL-X 推理和 API 代理；Mentor 可通过局域网 IP `192.168.1.91:5173` 远程访问。

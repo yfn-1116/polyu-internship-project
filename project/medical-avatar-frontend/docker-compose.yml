@@ -1,0 +1,38 @@
+# ── 医疗数字人前端 Docker 编排 ──
+# 启动: docker compose up -d
+# 停止: docker compose down
+# 日志: docker compose logs -f frontend
+
+services:
+  frontend:
+    build: .
+    container_name: medical-avatar-frontend
+    ports:
+      - "5173:80"
+    volumes:
+      # 模型文件：将本地 GLB 模型挂载到容器
+      - ./public/models:/usr/share/nginx/html/models:ro
+    restart: unless-stopped
+    networks:
+      - avatar-network
+
+  # ── 可选：Python 后端（取消注释以启用）──
+  # backend:
+  #   build:
+  #     context: ../backend
+  #     dockerfile: Dockerfile
+  #   container_name: smpl-backend
+  #   ports:
+  #     - "8001:8001"
+  #   environment:
+  #     - DASHSCOPE_API_KEY=${DASHSCOPE_API_KEY}
+  #   volumes:
+  #     - ../../models:/models:ro
+  #     - ../../data:/data:ro
+  #   restart: unless-stopped
+  #   networks:
+  #     - avatar-network
+
+networks:
+  avatar-network:
+    driver: bridge

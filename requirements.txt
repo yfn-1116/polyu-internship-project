@@ -1,0 +1,49 @@
+# ═════════════════════════════════════════════════════
+# SMPL Body Modeling Service — Python 依赖清单
+# ═════════════════════════════════════════════════════
+#
+# 安装方式（按需选择）：
+#
+#   完整安装（推荐）：
+#     pip install -r requirements.txt
+#
+#   仅后端 API（不含模型推理）：
+#     pip install numpy dashscope fastapi uvicorn chromadb pydantic
+#
+#   仅 SMPL-X 模型模块（含推理）：
+#     pip install numpy torch smplx trimesh
+#
+#   开发依赖：
+#     pip install -r requirements.txt -r requirements-dev.txt
+#
+# 注意：smplx 包需从 GitHub 安装，详见下方说明。
+# ═════════════════════════════════════════════════════
+
+# ── 核心依赖（后端 + 模型）──
+numpy>=1.24,<2.0
+pydantic>=2.0,<3.0
+
+# ── 后端 API 服务 ──
+fastapi>=0.110.0,<1.0
+uvicorn[standard]>=0.29.0,<1.0
+
+# ── AI / LLM ──
+dashscope>=1.20.0
+
+# ── RAG 向量数据库 ──
+chromadb>=0.5.0,<1.0
+
+# ── SMPL-X 模型推理 ──
+# smplx 包安装：
+#   pip install smplx  （从 PyPI）
+#   或从 GitHub：
+#   pip install git+https://github.com/vchoutas/smplx.git
+smplx>=0.1.28
+torch>=2.0,<3.0
+trimesh>=4.0,<5.0
+
+# ── 可选：OpenCV（图片/视频输入适配）──
+# opencv-python>=4.8
+
+# ── 可选：scipy（科学计算）──
+scipy>=1.10

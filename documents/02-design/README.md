@@ -30,6 +30,7 @@
 - `06-lld-frontend-m4-3d-viewer.md`
 - `07-lld-model-m5-smpl-module.md`
 - `08-lld-multimodal-input.md`
+- `09-lld-medical-digital-human.md`：医疗数字人 3D 交互系统（React/R3F 前端 + AI Chat + RAG + 全息预留）
 
 ## LLD 推荐结构
 

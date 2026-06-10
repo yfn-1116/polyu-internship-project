@@ -7,6 +7,19 @@
 - Daily Log 只记关键进展、阻塞和验证结果，不写聊天流水。
 - 任务状态以 `99-project-planning.md` 为准。
 
+## 最近变更（2026-06-09）
+
+- Frontend：新建 `project/medical-avatar-frontend/` 医疗数字人 3D 交互系统前端（React + TypeScript + Vite + Tailwind CSS + R3F + Zustand），28 个源文件，~1800 行代码。
+- Frontend：实现 3D Fallback 几何体数字人（白大褂 + 肤色 + 深蓝裤装），支持 idle/listening/thinking/speaking/guiding/rehab 6 种状态动画。
+- Frontend：实现医疗信息面板（当前问题/AI回答/建议科室/风险提示/知识来源/免责声明 6 张卡片），玻璃拟态UI风格。
+- Frontend：实现 mock 对话流程（快捷问题→listening→thinking→speaking→idle），字幕逐字显示。
+- Frontend：Vite 配置 `host: 0.0.0.0`，WSL2 mirrored 网络模式 IP `192.168.1.91`，支持局域网内其他设备（Mentor）远程访问。
+- Design：完成后端 AI 对话 + RAG + 全息投影接口完整设计方案（`documents/02-design/09-lld-medical-digital-human.md`）。
+- Decision：LLM 采用千问 DashScope API（云端），避免本地 GPU（RTX 5070 12GB）同时跑 LLM + SMPL-X 推理导致显存不足。
+- Decision：RAG 采用 ChromaDB 本地向量库 + 千问 text-embedding-v3，知识来源覆盖疾病/导诊/用药/体检/康复/老年医学 6 类。
+- Decision：全息投影接口预留（WebSocket 顶点流 / glTF 导出 / 多视角渲染），MVP 阶段只做接口定义，不实现具体硬件对接。
+- Decision：目前仅输出方案和前端代码，依赖安装（npm install）由用户后续手动执行。
+
 ## 最近变更（2026-06-05）
 
 - Docs：将文档体系改为 quant_platform 风格：`99-project-planning.md` 负责 Plan + Tracker，新增 `97-journal.md` 负责进展日志。

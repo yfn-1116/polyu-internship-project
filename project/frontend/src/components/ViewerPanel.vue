@@ -6,10 +6,11 @@
 
 <script setup>
 import { ref, watch, onMounted, onUnmounted } from 'vue'
-import { store, isMoCapSample } from '../stores/viewerStore.js'
+import { store, isMoCapSample, interactiveMesh } from '../stores/viewerStore.js'
 import { useScene } from '../composables/useScene.js'
 import { useAnimation } from '../composables/useAnimation.js'
-import { loadSampleToScene, loadMoCapData } from '../composables/useModelLoader.js'
+import { loadSampleToScene, loadMoCapData, applyMeshMaterial } from '../composables/useModelLoader.js'
+import * as THREE from 'three'
 
 const container = ref(null)
 
@@ -80,7 +81,55 @@ onUnmounted(() => {
   if (animFrameId) cancelAnimationFrame(animFrameId)
 })
 
+// Watch interactive parameter changes
+let interactiveObject = null
+
+watch(() => interactiveMesh.version, () => {
+  if (!sceneApi || !interactiveMesh.vertices) return
+
+  anim.stop()
+  store.isAnimating = false
+  store.status = '参数模式'
+
+  if (interactiveObject) {
+    // Update existing mesh vertices only
+    const posAttr = interactiveObject.geometry.attributes.position
+    posAttr.array.set(interactiveMesh.vertices)
+    posAttr.needsUpdate = true
+    interactiveObject.geometry.computeVertexNormals()
+  } else {
+    // First time: create mesh from scratch
+    const geo = new THREE.BufferGeometry()
+    geo.setAttribute('position', new THREE.BufferAttribute(interactiveMesh.vertices.slice(), 3))
+    const faceArr = []
+    for (const f of interactiveMesh.faces || [[0, 1, 2]]) faceArr.push(f[0], f[1], f[2])
+    geo.setIndex(new THREE.BufferAttribute(new Uint32Array(faceArr), 1))
+    geo.computeVertexNormals()
+
+    const mat = new THREE.MeshStandardMaterial({
+      color: 0x7c9cbf, roughness: 0.55, metalness: 0.05, side: THREE.DoubleSide,
+    })
+    const mesh = new THREE.Mesh(geo, mat)
+    mesh.castShadow = true
+    mesh.receiveShadow = true
+
+    sceneApi.setObject(mesh)
+    interactiveObject = mesh
+  }
+
+  store.modelInfo = {
+    taskId: 'interactive',
+    modelType: 'SMPL-X (交互)',
+    meshPath: '-',
+    verticesCount: interactiveMesh.vCount,
+    facesCount: interactiveMesh.fCount,
+  }
+})
+
 watch(() => store.activeSample, (id) => {
+  interactiveObject = null
+  anim.stop()
+  store.isAnimating = false
   loadSample(id)
 })
 </script>

@@ -70,6 +70,25 @@ export const store = reactive({
   animSpeed: 1.0,
 })
 
+// Interactive parameter mode
+export const interactiveMesh = reactive({
+  vertices: null,    // Float32Array of vertex positions
+  faces: null,       // face indices
+  vCount: 0,
+  fCount: 0,
+  version: 0,        // incremented on each update, triggers watcher
+})
+
+export function updateInteractiveMesh(data) {
+  if (!data || !data.vertices) return
+  const flat = []
+  for (const v of data.vertices) flat.push(v[0], v[1], v[2])
+  interactiveMesh.vertices = new Float32Array(flat)
+  interactiveMesh.vCount = data.vertex_count
+  interactiveMesh.fCount = data.face_count
+  interactiveMesh.version++
+}
+
 export function isMoCapSample(id) {
   return id.startsWith('mocap')
 }

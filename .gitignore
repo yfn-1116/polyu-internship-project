@@ -37,3 +37,13 @@ project/frontend/public/sample-smplx-slim/
 project/frontend/public/sample-smplx-broad/
 project/frontend/public/sample-smplx-tall/
 project/frontend/public/sample-mocap-*/
+project/medical-avatar-frontend/public/sample-smplx-*/
+project/medical-avatar-frontend/public/sample-mocap-*/
+project/medical-avatar-frontend/public/models/*.glb
+project/medical-avatar-frontend/public/models/*.gltf
+project/medical-avatar-frontend/.env
+
+# ChromaDB vector database (re-seed with seed_knowledge_base.py)
+project/backend/src/chroma_db/
+project/backend/.env
+project/backend/src/patient_data/

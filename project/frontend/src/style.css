@@ -505,3 +505,44 @@ html, body {
   background: var(--slate-200);
   border-radius: 2px;
 }
+
+/* Parameter slider rows */
+.slider-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.slider-label {
+  width: 40px;
+  font-size: 11px;
+  color: var(--slate-500);
+  flex-shrink: 0;
+}
+
+.slider-val {
+  width: 32px;
+  font-size: 11px;
+  color: var(--slate-700);
+  text-align: right;
+}
+
+.slider-row input[type="range"] {
+  flex: 1;
+  height: 4px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--slate-200);
+  border-radius: 2px;
+  outline: none;
+}
+
+.slider-row input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--blue-600);
+  cursor: pointer;
+}
