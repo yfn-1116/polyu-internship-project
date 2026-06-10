@@ -13,6 +13,8 @@ import type { AvatarAction } from './types/avatar'
 import AvatarStatusBadge from './components/status/AvatarStatusBadge'
 import PatientInfoPanel from './components/medical/PatientInfoPanel'
 import MetricsPanel from './components/medical/MetricsPanel'
+import BodyPartSelector from './components/medical/BodyPartSelector'
+import type { BodyPartKey } from './components/medical/BodyPartSelector'
 import ChatPanel from './components/chat/ChatPanel'
 import AnimationControls from './components/avatar/AnimationControls'
 import AvatarStage from './components/avatar/AvatarStage'
@@ -24,6 +26,7 @@ export default function App() {
 
   const [inputText, setInputText] = useState('')
   const [isRecording, setRecording] = useState(false)
+  const [selectedBodyPart, setSelectedBodyPart] = useState<BodyPartKey | null>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
   const onSubmit = useCallback(() => {
@@ -94,6 +97,9 @@ export default function App() {
           <PatientInfoPanel />
           <MetricsPanel />
 
+          {/* 身体部位标注 */}
+          <BodyPartSelector selectedPart={selectedBodyPart} onSelect={setSelectedBodyPart} />
+
           {/* 快捷问题 */}
           <div className="glass-card">
             <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.18em] text-[#00bcd4]">Quick Ask</p>
@@ -129,7 +135,7 @@ export default function App() {
 
           {/* 3D 画布 */}
           <div className="absolute inset-0 avatar-stage-bg">
-            <AvatarStage state={stageState} modelMode="doctor" compact={false} />
+            <AvatarStage state={stageState} modelMode="doctor" compact={false} selectedPart={selectedBodyPart} />
           </div>
 
           {/* 底部字幕叠加 */}
