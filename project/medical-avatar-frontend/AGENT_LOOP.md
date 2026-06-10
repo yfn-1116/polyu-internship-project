@@ -1,28 +1,23 @@
-# Agent Loop — 3D 医疗数字人前端 Demo
+# Agent Loop — Phase 2: 虚拟病人讲解交互
 
-## 状态：✅ 完成（5/5 轮）
+## Round 2 / 5 — 相机自动聚焦
 
-## 执行记录
+## 验收标准
+1. ✅ npm run build 通过
+2. 点击身体部位 → 相机平滑 zoom 到该部位
+3. 取消选中 → 恢复全景
+4. 3D 标注文字浮在部位旁
+5. 高亮脉冲动画
+6. TTS 语音播报 AI 回答
+7. 讲解时自动高亮相关身体部位
 
-| Round | 内容 | 结果 |
-|-------|------|------|
-| Round 1 | 项目搭建确认：依赖检查、目录结构确认 | ✅ 依赖齐全，结构就绪 |
-| Round 2 | 核心功能：类型定义、services、hooks、组件、App.tsx 重写 | ✅ 全部实现 |
-| Round 3 | 视觉优化：暗色主题 CSS、灯光、舞台、AvatarLights | ✅ 完成 |
-| Round 4 | 接口预留 + README + Docker | ✅ 完成 |
-| Round 5 | tsc + vite build 验证 + 错误修复 | ✅ 通过 |
+## Agent 分工
 
-## 验收标准检查
-
-1. ✅ npm install 通过（0 vulnerabilities）
-2. ✅ npm run dev 可启动
-3. ✅ npm run build 不报错
-4. ✅ 无 GLB 模型时显示 Fallback 几何体
-5. ✅ 中间 3D 数字人展示区域
-6. ✅ 左侧医疗数据面板
-7. ✅ 右侧聊天记录 + 动作控制
-8. ✅ 底部输入框 + 语音按钮
-9. ✅ Mock AI 回复
-10. ✅ 状态在 idle/listening/thinking/talking/gesture 间切换
-11. ✅ README 完整
-12. ✅ Docker 部署就绪
+| Agent | 职责 |
+|-------|------|
+| Agent 1 | CameraZoom — 相机聚焦逻辑 |
+| Agent 2 | PulseHighlight — 脉冲高亮动画 |
+| Agent 3 | Annotation3D — 3D 标注标签 |
+| Agent 4 | TTS Voice — 浏览器语音合成 |
+| Agent 5 | BodyTour — 讲解联动部位高亮 |
+| Agent 6 | Tester — 每步 build 验证 |

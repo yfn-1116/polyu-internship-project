@@ -4,9 +4,13 @@ import { Environment, OrbitControls } from '@react-three/drei'
 import * as THREE from 'three'
 import type { Group, Mesh } from 'three'
 import type { AvatarState } from '../../types/digitalHuman'
+import type { BodyPartKey } from '../medical/BodyPartSelector'
 import AvatarModel from './AvatarModel'
 import AvatarLights from './AvatarLights'
 import AvatarControls from './AvatarControls'
+import CameraZoom from './CameraZoom'
+import BodyAnnotation from './BodyAnnotation'
+import HighlightPulse from './HighlightPulse'
 import { useSkeletalAnimation } from '../../composables/useSkeletalAnimation'
 import { type BodyPartRefs, highlightBodyGroup, unhighlightBodyGroup } from './FallbackMedicalAvatar'
 
@@ -47,6 +51,7 @@ function AutoFit({ scene }: { scene: THREE.Group | null }) {
 
 function SceneContent({ state, isRehab, modelMode, compact, selectedPart }: Omit<AvatarStageProps, 'modelMode'> & { modelMode: 'doctor' | 'smplx', compact: boolean }) {
   const avatarRef = useRef<Group>(null!)
+  const orbitRef = useRef<any>(null)
 
   // 身体部位 refs
   const bodyRefs: BodyPartRefs = {
@@ -93,11 +98,17 @@ function SceneContent({ state, isRehab, modelMode, compact, selectedPart }: Omit
   return (
     <>
       <OrbitControls
+        ref={orbitRef}
         enableDamping dampingFactor={0.08}
         minDistance={1.2} maxDistance={8}
         maxPolarAngle={Math.PI * 0.75}
         target={[0, 0.4, 0]}
       />
+
+      {/* 相机聚焦 + 脉冲高亮 + 部位标注 */}
+      <CameraZoom selectedPart={selectedPart as BodyPartKey | null} controlsRef={orbitRef} />
+      <HighlightPulse active={!!selectedPart} />
+      <BodyAnnotation part={selectedPart as BodyPartKey | null} />
 
       <group ref={avatarRef}>
         <AvatarModel

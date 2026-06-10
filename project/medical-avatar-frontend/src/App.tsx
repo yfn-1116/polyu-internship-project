@@ -19,10 +19,18 @@ import ChatPanel from './components/chat/ChatPanel'
 import AnimationControls from './components/avatar/AnimationControls'
 import AvatarStage from './components/avatar/AvatarStage'
 import { QUICK_QUESTIONS } from './data/mockMedicalData'
+import { useTTS } from './hooks/useTTS'
 
 export default function App() {
   const { avatarState, stateLabel, applyAction } = useAvatarState()
   const { handleSend } = useChatMock()
+  const { speak: ttsSpeak, stop: ttsStop } = useTTS()
+
+  // AI 回答后自动朗读
+  const currentAnswer = useDigitalHumanStore((s) => s.currentAnswer)
+  useEffect(() => {
+    if (currentAnswer) ttsSpeak(currentAnswer)
+  }, [currentAnswer])  // eslint-disable-line react-hooks/exhaustive-deps
 
   const [inputText, setInputText] = useState('')
   const [isRecording, setRecording] = useState(false)
